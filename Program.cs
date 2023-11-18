@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using SistemaDeEstacionamento.Models.DAO;
+
 var builder = WebApplication.CreateBuilder(args);
+// Configuração EF core
+// Adicionando o service que vai referenciar a string de conexão que fica no appsettings.json
+builder.Services.AddDbContext<BaseEstacionamentoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BaseEstacionamentoContext") ?? throw new InvalidOperationException("Connection string 'BaseEstacionamentoContext' not found.")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
