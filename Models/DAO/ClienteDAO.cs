@@ -2,7 +2,7 @@
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
-    public class ClienteDAO : DbContext
+    public class ClienteDAO : DbContext , IClienteDAO 
     {
         
         public List<Cliente> RetornarTodosClientes()

@@ -6,7 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Adicionando o service que vai referenciar a string de conexão que fica no appsettings.json
 builder.Services.AddDbContext<BaseEstacionamentoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BaseEstacionamentoContext") ?? throw new InvalidOperationException("Connection string 'BaseEstacionamentoContext' not found.")));
-
+// Injeções de dependencias
+builder.Services.AddScoped<IClienteDAO,ClienteDAO>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
