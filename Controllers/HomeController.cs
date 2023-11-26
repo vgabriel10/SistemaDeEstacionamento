@@ -1,16 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaDeEstacionamento.Models;
+using SistemaDeEstacionamento.Models.DAO;
+using SistemaDeEstacionamento.Service;
 using System.Diagnostics;
 
 namespace SistemaDeEstacionamento.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        //private readonly IClienteDAO _clienteDAO;
+
+        //public HomeController(IClienteDAO clienteDAO)
+        //{
+        //    _clienteDAO = clienteDAO;
+        //}
+
+        private readonly IClienteService _clienteService;
+
+        public HomeController(IClienteService clienteService)
         {
-            _logger = logger;
+            _clienteService = clienteService;
         }
 
         public IActionResult Index()
@@ -20,6 +36,7 @@ namespace SistemaDeEstacionamento.Controllers
 
         public IActionResult AdicionarEntradaVeiculo()
         {
+            _clienteService.AdicionarCliente();
             return View();
         }
 

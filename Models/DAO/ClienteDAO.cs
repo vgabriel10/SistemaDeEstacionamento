@@ -4,14 +4,17 @@ namespace SistemaDeEstacionamento.Models.DAO
 {
     public class ClienteDAO : DbContext , IClienteDAO 
     {
-        
+
+        //private readonly DbContext _dbContext;
+
+        //public ClienteDAO(DbContext dbContext)
+        //{
+        //    _dbContext = dbContext;
+        //}
+
         public List<Cliente> RetornarTodosClientes()
         {
-            List<Cliente> clientes = new List<Cliente>();
-            //var db = new BaseEstacionamentoContext();
-            //clientes = db.Cliente.ToList();
-            
-            return clientes;
+            throw new NotImplementedException();
         }
     }
 }
