@@ -12,15 +12,24 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
             _clienteDAO = clienteDAO;
         }
-
         #endregion
-        public void AdicionarCliente()
+
+        public void AdicionarCliente(string nome, string? cpf, string? telefone, string placa, string veiculo)
         {
-            _clienteDAO.RetornarTodosClientes();
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Cliente BuscarCliente()
+        public Cliente BuscarClientePelaPlaca(string placa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Cliente BuscarClientePeloCpf(string cpf)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Cliente BuscarClientePeloNome(string nome)
         {
             throw new NotImplementedException();
         }
@@ -34,5 +43,13 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
             throw new NotImplementedException();
         }
+
+        public List<Cliente> RetornarTodosClientes()
+        {
+            return _clienteDAO.RetornarTodosClientes();
+        }
+
+        
+
     }
 }

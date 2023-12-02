@@ -12,8 +12,9 @@ builder.Services.AddDbContext<BaseEstacionamentoContext>(options =>
 
 //Services
 builder.Services.AddTransient<IClienteService, ClienteService>();
-
 builder.Services.AddTransient<IClienteDAO, ClienteDAO>();
+builder.Services.AddTransient<IEstacionamentoService, EstacionamentoService>();
+builder.Services.AddTransient<IEstacionamentoDAO, EstacionamentoDAO>();
 
 
 // Add services to the container.

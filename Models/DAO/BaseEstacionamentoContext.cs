@@ -8,6 +8,12 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
 
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Veiculo> Veiculo { get; set; }
         public DbSet<TipoVeiculo> TipoVeiculo { get; set; }

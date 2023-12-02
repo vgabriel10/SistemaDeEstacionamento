@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaDeEstacionamento.Models;
 using SistemaDeEstacionamento.Models.DAO;
-using SistemaDeEstacionamento.Models.DTO;
 using SistemaDeEstacionamento.Service;
 using System.Diagnostics;
 
 namespace SistemaDeEstacionamento.Controllers
 {
-    public class HomeController : Controller
+    public class EstacionamentoController : Controller
     {
         //private readonly ILogger<HomeController> _logger;
 
@@ -24,12 +23,10 @@ namespace SistemaDeEstacionamento.Controllers
         //}
 
         private readonly IClienteService _clienteService;
-        private readonly IEstacionamentoService _estacionamentoService;
 
-        public HomeController(IClienteService clienteService, IEstacionamentoService estacionamentoService)
+        public EstacionamentoController(IClienteService clienteService)
         {
             _clienteService = clienteService;
-            _estacionamentoService = estacionamentoService;
         }
 
         public IActionResult Index()
@@ -40,16 +37,8 @@ namespace SistemaDeEstacionamento.Controllers
 
         public IActionResult AdicionarEntradaVeiculo()
         {
-            
+            //_clienteService.AdicionarCliente();
             return View();
-        }
-
-        [HttpPost]
-        public VeiculosNoEstacionamentoDTO RegistrarEntradaVeiculo(VeiculosNoEstacionamentoDTO veiculo)
-        {
-
-            _estacionamentoService.RegistrarEntradaVeiculo(veiculo);
-            return null;
         }
 
         public IActionResult ListarVeiculos()

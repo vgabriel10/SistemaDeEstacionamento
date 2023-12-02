@@ -4,31 +4,39 @@
 <h1>@ViewData["Title"]</h1>
 
 
-<form>
+<form action="/Home/RegistrarEntradaVeiculo" method="post">
     <div class="row">
         <div class="form-group col-md-6">
             <label for="inputEmail4">Nome do Cliente Responsável:</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Nome">
+            <input name="NomeCliente" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
         </div>
         <div class="form-group col-md-6">
             <label for="inputPassword4">CPF:</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
+            <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00">
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        @*<div class="form-group col-md-6">
             <label for="inputEmail4">Nome do cliente (opcional):</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Nome">
+            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
         </div>
         <div class="form-group col-md-6">
             <label for="inputPassword4">CPF:</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
+            <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00">
+        </div>*@
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Telefone:</label>
+            <input name="Telefone" type="text" class="form-control" id="inputEmail4" placeholder="(00)900-0000">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Nome do cliente (opcional):</label>
+            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             <label for="ddlTipoVeiculo">Tipo de veículo:</label>
-            <select id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+            <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -38,25 +46,25 @@
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            <label for="inputEmail4">Modelo:</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Nome">
+            <label for="inputEmail4">Nome do Veículo:</label>
+            <input name="NomeVeiculo" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
         </div>
         <div class="form-group col-md-6">
             <label for="inputPassword4">Placa:</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
+            <input name="Placa" type="text" class="form-control" id="inputPassword4" placeholder="Placa">
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             <div class="cs-form">
                 <label for="inputPassword4">Hora da Entrada:</label>
-                <input type="time" class="form-control" value="10:05 AM" />
+                <input name="HoraEntrada" type="time" class="form-control" value="10:05 AM" />
             </div>
         </div>
         <div class="form-group col-md-6">
             <div class="cs-form">
                 <label for="inputPassword4">Local:</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Nome">
+                <input name="Local" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
             </div>
         </div>
     </div>
