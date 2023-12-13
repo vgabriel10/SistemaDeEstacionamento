@@ -15,6 +15,8 @@ builder.Services.AddTransient<IClienteService, ClienteService>();
 builder.Services.AddTransient<IClienteDAO, ClienteDAO>();
 builder.Services.AddTransient<IEstacionamentoService, EstacionamentoService>();
 builder.Services.AddTransient<IEstacionamentoDAO, EstacionamentoDAO>();
+builder.Services.AddTransient<IFaturamentoService, FaturamentoService>();
+builder.Services.AddTransient<IFaturamentoDAO, FaturamentoDAO>();
 
 
 // Add services to the container.

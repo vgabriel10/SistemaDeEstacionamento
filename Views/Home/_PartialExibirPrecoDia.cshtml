@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Alterar preços";
+    //@model ValorVeiculo
+    List<ValorVeiculo> infoValorDia = ViewBag.PrecoDia;
+    List<TipoDia> ListaDias = ViewBag.ListaDias;
+}
+
+<script>
+
+    
+    // Tenho que pegar o dia e o id para poder alterar o valor
+    function ShowModalAlterarValor(tipoVeiculo,idTipoVeiculo,valorHora){
+        //let idDiaSelecinado = parseInt($("#ddlDia option:selected").val());
+        let diaSelecinado = $("#ddlDia option:selected").text();
+        console.log(diaSelecinado);
+        $('#lblIdTipoVeiculo').text(`${idTipoVeiculo}`);
+        //$("#lblIdTipoVeiculo").hide();
+        $('#lblTipoVeiculo').text(`${tipoVeiculo} - ${diaSelecinado}`);
+    }
+
+    function AlterarPreco() {
+        //let tipoVeiculo = parseInt($('#lblIdTipoVeiculo').val());
+        let tipoVeiculo = $('#lblIdTipoVeiculo').text();
+        let diaSelecinado = parseInt($("#ddlDia option:selected").val());
+        let valorHora = parseFloat($('#txtPreco').val());
+        console.log(valorHora);
+        $.ajax({
+            url: '/Home/AlterarPrecoDia',
+            type: 'POST',
+            data: { tipoVeiculo: tipoVeiculo, dia: diaSelecinado, valor: valorHora },
+            success: function (response) {
+                console.log('Resposta do servidor:', response);
+                alert('Deu certo!');
+                $('#btnFecharModal').click();
+                $('#partialView_ExibirPrecoDia').load(`/Home/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+            },
+            error: function (error) {
+                console.error('Erro na solicitação:', error);
+            }
+        });
+    }
+
+    function ExcluirPreco(idTipoVeiculo){
+        let diaSelecinado = parseInt($("#ddlDia option:selected").val());
+        $.ajax({
+            url: '/Home/ExcluirTipoVeiculo',
+            type: 'POST',
+            data: { idTipoVeiculo: idTipoVeiculo },
+            success: function (response) {
+                alert('Deu certo!');
+                $('#partialView_ExibirPrecoDia').load(`/Home/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+            },
+            error: function (error) {
+                console.error('Erro na solicitação:', error);
+            }
+        });
+    }
+
+</script>
+
+
+<table class="table">
+    <tr>
+        <td>Tipo do Veiculo</td>
+        <td>Valor</td>
+        <td>Alterar</td>
+        <td>Excluir</td>
+    </tr>
+    @foreach (var item in infoValorDia)
+    {
+        <tr>
+            <td>@item.TipoVeiculo.Nome</td>
+            <td>R$ @item.ValorHora</td>
+            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="mdo" onclick="ShowModalAlterarValor('@item.TipoVeiculo.Nome', @item.IdTipoVeiculo,@item.ValorHora)">Alterar</button></td>
+            <td><button class="btn btn-danger" onclick="ExcluirPreco(@item.IdTipoVeiculo)"> Excluir </button></td>
+        </tr>
+    }
+
+</table>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar preço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div style="visibility: collapse;">
+                        <input id="lblIdTipoVeiculo" style="font-family:Arial" for="recipient-name" class="col-form-label"/>
+                    </div>
+                    <div class="mb-3">
+                        
+                        <label id="lblTipoVeiculo" style="font-family:Arial; font-size:16px;" for="recipient-name" class="col-form-label"></label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Preço:</label>
+                        <input class="form-control" id="txtPreco" type="number"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btnFecharModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="AlterarPreco()">Alterar preço</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

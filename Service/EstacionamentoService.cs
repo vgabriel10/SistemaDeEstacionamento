@@ -28,6 +28,21 @@ namespace SistemaDeEstacionamento.Models.DAO
             throw new NotImplementedException();
         }
 
+        public List<VeiculosNoEstacionamentoDTO> RetornarVeiculosEstacionados()
+        {
+            return _estacionamentoDAO.RetornarVeiculosEstacionados();
+        }
+
+        public List<TipoDia> RetornaTiposDias()
+        {
+            return _estacionamentoDAO.RetornaTiposDias();
+        }
+
+        public List<TipoVeiculo> TiposVeiculos()
+        {
+            return _estacionamentoDAO.TiposVeiculos();
+        }
+
         public void TodosVeiculosNoEstacionamento()
         {
             throw new NotImplementedException();

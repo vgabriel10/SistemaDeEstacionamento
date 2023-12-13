@@ -5,7 +5,7 @@ namespace SistemaDeEstacionamento.Models.DTO
     {
         public string NomeCliente { get; set; }
         public string NomeCliente2 { get; set; }
-        public string Cpf { get; set; }
+        public string? Cpf { get; set; }
         public string Telefone { get; set; }
         public string Local { get; set; }
         public int TipoVeiculo { get; set; }

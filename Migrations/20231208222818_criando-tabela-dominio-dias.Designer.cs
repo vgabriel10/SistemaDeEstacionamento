@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeEstacionamento.Models.DAO;
 
@@ -11,9 +12,11 @@ using SistemaDeEstacionamento.Models.DAO;
 namespace SistemaDeEstacionamento.Migrations
 {
     [DbContext(typeof(BaseEstacionamentoContext))]
-    partial class BaseEstacionamentoContextModelSnapshot : ModelSnapshot
+    [Migration("20231208222818_criando-tabela-dominio-dias")]
+    partial class criandotabeladominiodias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,11 +148,6 @@ namespace SistemaDeEstacionamento.Migrations
                         {
                             Id = 7,
                             Dia = "Sábado"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Dia = "Feriado"
                         });
                 });
 

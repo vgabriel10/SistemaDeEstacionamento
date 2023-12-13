@@ -12,7 +12,7 @@ namespace SistemaDeEstacionamento.Models
         public string? Cpf { get; set; }
         public string? Telefone { get; set; }
         [ForeignKey("Veiculo")]
-        public string Placa { get; set; }
+        public int IdVeiculo { get; set; }
         public virtual Veiculo Veiculo { get; set; }
     }
 }

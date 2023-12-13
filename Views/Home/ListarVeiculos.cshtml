@@ -1,5 +1,7 @@
-﻿@{
+﻿@using SistemaDeEstacionamento.Models.DTO;
+@{
     ViewData["Title"] = "Lista de Veículos no estacionamento";
+    List<VeiculosNoEstacionamentoDTO> veiculosEstacionados = ViewBag.VeiculosEstacionados;
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -15,6 +17,22 @@
         </tr>
     </thead>
     <tbody>
+        @{
+            if (veiculosEstacionados != null && veiculosEstacionados.Count > 0)
+            {
+                foreach (var item in veiculosEstacionados)
+                {
+                    <tr>
+                        <td>@item.Placa</td>
+                        <td>@item.NomeVeiculo</td>
+                        <td>@item.NomeCliente</td>
+                        <td>@item.Local</td>
+                        <td>@item.HoraEntrada</td>
+                    </tr>
+                }
+
+            }
+        }
         <tr>
             <th scope="row">1</th>
             <td>Mark</td>

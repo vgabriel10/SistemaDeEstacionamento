@@ -1,20 +1,66 @@
 ﻿@{
     ViewData["Title"] = "Alterar preços";
+    List<ValorVeiculo> infoValorDia = ViewBag.PrecoDia;
+    List<TipoDia> ListaDias = ViewBag.ListaDias;
 }
+
+<script>
+
+    $(function () {
+
+    });
+
+    function Carregar(e) {
+        let diaSelecinado = parseInt($("#ddlDia option:selected").val());
+        $('#partialView_ExibirPrecoDia').load(`/Home/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+    }
+
+
+    
+    
+
+</script>
+
 <h1>@ViewData["Title"]</h1>
 
+<div class="row">
+    <div class="form-group col-md-6">
+        <label for="ddlTipoVeiculo">Dia da semana:</label>
+        <select name="TipoVeiculo" id="ddlDia" class="form-select" aria-label="Default select example" onchange="Carregar(event)">
+            @foreach(var item in ListaDias)
+            {
+                <option value=@item.Id>@item.Dia</option>
+            }
+        </select>
+    </div>
+</div>
 
-<table class="table">
-    <tr>
-        <td>Tipo do Veiculo</td>
-        <td>Dia da semana</td>
-        <td>Valor</td>
-        <td>Alterar</td>
-    </tr>
-    <tr>
-        <td>Carro</td>
-        <td>Domingo</td>
-        <td>15 R$</td>
-        <td><a href="" class="btn btn-primary"> Alterar </a></td>
-    </tr>
-</table>
+<div id="partialView_ExibirPrecoDia">
+    @await Html.PartialAsync("_PartialExibirPrecoDia",infoValorDia)
+</div>
+
+
+<h2>Adicionar tipo de veiculo</h2>
+<form action="/Home/AdicionarNovoTipoVeiculo" method="post">
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label for="inputEmail4">Tipo de veículo:</label>
+            <input name="nomeTipo" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputPassword4">Valor:</label>
+            <input name="valorPadrao" type="number" class="form-control" id="inputPassword4" placeholder="R$">
+        </div>
+
+
+    </div>
+    <div style="margin-top:10px;" class="row">
+        <div class="form-group col-md-3">
+            <button class="btn btn-success">Adicionar</button>
+        </div>
+    </div>
+</form>
+
+
+
+

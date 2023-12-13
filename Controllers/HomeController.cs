@@ -4,6 +4,7 @@ using SistemaDeEstacionamento.Models.DAO;
 using SistemaDeEstacionamento.Models.DTO;
 using SistemaDeEstacionamento.Service;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace SistemaDeEstacionamento.Controllers
 {
@@ -25,11 +26,13 @@ namespace SistemaDeEstacionamento.Controllers
 
         private readonly IClienteService _clienteService;
         private readonly IEstacionamentoService _estacionamentoService;
+        private readonly IFaturamentoService _faturamentoService;
 
-        public HomeController(IClienteService clienteService, IEstacionamentoService estacionamentoService)
+        public HomeController(IClienteService clienteService, IEstacionamentoService estacionamentoService, IFaturamentoService faturamentoService)
         {
             _clienteService = clienteService;
             _estacionamentoService = estacionamentoService;
+            _faturamentoService = faturamentoService;
         }
 
         public IActionResult Index()
@@ -40,26 +43,59 @@ namespace SistemaDeEstacionamento.Controllers
 
         public IActionResult AdicionarEntradaVeiculo()
         {
-            
+            List<TipoVeiculo> tiposVeiculos = _estacionamentoService.TiposVeiculos();
+            ViewBag.TiposVeiculos = tiposVeiculos;
             return View();
         }
 
         [HttpPost]
         public VeiculosNoEstacionamentoDTO RegistrarEntradaVeiculo(VeiculosNoEstacionamentoDTO veiculo)
         {
-
             _estacionamentoService.RegistrarEntradaVeiculo(veiculo);
+            TempData["ok"] = "Tarefa criada com sucesso!";
+            Response.Redirect("/Home/AdicionarEntradaVeiculo");
             return null;
         }
 
         public IActionResult ListarVeiculos()
         {
+            var veiculosEstracionados = _estacionamentoService.RetornarVeiculosEstacionados();
+            ViewBag.VeiculosEstacionados = veiculosEstracionados;
             return View();
         }
 
         public IActionResult AlterarPreco()
         {
+            var listaDias = _estacionamentoService.RetornaTiposDias();
+            ViewBag.listaDias = listaDias;
+            var listarPrecos = _faturamentoService.ListarPrecosVeiculos(1);
+            ViewBag.PrecoDia = listarPrecos;
             return View();
+        }
+
+        public IActionResult PartialExibirPrecoDia(int dia)
+        {
+            var listarPrecos = _faturamentoService.ListarPrecosVeiculos(dia);
+            ViewBag.PrecoDia = listarPrecos;
+            return PartialView("_PartialExibirPrecoDia", listarPrecos);
+        }
+
+        public void AdicionarNovoTipoVeiculo(string nomeTipo, float valorPadrao)
+        {
+            _faturamentoService.AdicionarNovoTipoVeiculo(nomeTipo, valorPadrao);
+            Response.Redirect("/Home/AlterarPreco");
+        }
+
+        public void AlterarPrecoDia(int tipoVeiculo, int dia , float valor)
+        {
+            _faturamentoService.AlterarValorTipoVeiculo(tipoVeiculo, dia, valor);
+            //Response.Redirect("/Home/AlterarPreco");
+        }
+
+        public void ExcluirTipoVeiculo(int idTipoVeiculo)
+        {
+            _faturamentoService.ExcluirTipoVeiculo(idTipoVeiculo);
+            //Response.Redirect("/Home/AlterarPreco");
         }
 
         public IActionResult Faturamento()

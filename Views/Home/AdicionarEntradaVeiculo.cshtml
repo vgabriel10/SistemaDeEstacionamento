@@ -1,7 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Adicionar entrada de veículo";
+    List<TipoVeiculo> tiposVeiculos = ViewBag.TiposVeiculos;
 }
 <h1>@ViewData["Title"]</h1>
+
+@if (TempData["ok"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        Entrada de veículo registrada com sucesso!
+    </div>
+}
 
 
 <form action="/Home/RegistrarEntradaVeiculo" method="post">
@@ -37,10 +45,16 @@
         <div class="form-group col-md-6">
             <label for="ddlTipoVeiculo">Tipo de veículo:</label>
             <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
+                <option selected>Escolha uma opção</option>
+                @{
+                    foreach(var opcao in tiposVeiculos)
+                    {
+                        <option value=@opcao.Id>@opcao.Nome</option>
+                    }
+                }
+                @*<option value="1">One</option>
                 <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="3">Three</option>*@
             </select>
         </div>
     </div>

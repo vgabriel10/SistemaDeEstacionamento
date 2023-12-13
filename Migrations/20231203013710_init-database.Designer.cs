@@ -12,8 +12,8 @@ using SistemaDeEstacionamento.Models.DAO;
 namespace SistemaDeEstacionamento.Migrations
 {
     [DbContext(typeof(BaseEstacionamentoContext))]
-    [Migration("20231118030445_BaseEstacionamento")]
-    partial class BaseEstacionamento
+    [Migration("20231203013710_init-database")]
+    partial class initdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace SistemaDeEstacionamento.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,22 +39,59 @@ namespace SistemaDeEstacionamento.Migrations
                     b.Property<string>("Cpf")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IdVeiculo")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Placa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Telefone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Placa");
+                    b.HasIndex("IdVeiculo");
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("SistemaDeEstacionamento.Models.ClienteVeiculoValor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdCliente")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdTipo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdVeiculo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TempoEstacionado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("ValorBruto")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ValorTotal")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCliente");
+
+                    b.HasIndex("IdTipo");
+
+                    b.HasIndex("IdVeiculo");
+
+                    b.ToTable("ClientesVeiculosValores");
                 });
 
             modelBuilder.Entity("SistemaDeEstacionamento.Models.TipoVeiculo", b =>
@@ -73,13 +113,16 @@ namespace SistemaDeEstacionamento.Migrations
 
             modelBuilder.Entity("SistemaDeEstacionamento.Models.ValorVeiculo", b =>
                 {
-                    b.Property<int>("IdTipo")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipo"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Dia")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdTipoVeiculo")
                         .HasColumnType("int");
 
                     b.Property<float?>("Promocao")
@@ -88,15 +131,26 @@ namespace SistemaDeEstacionamento.Migrations
                     b.Property<float>("ValorHora")
                         .HasColumnType("real");
 
-                    b.HasKey("IdTipo");
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdTipoVeiculo");
 
                     b.ToTable("ValorVeiculo");
                 });
 
             modelBuilder.Entity("SistemaDeEstacionamento.Models.Veiculo", b =>
                 {
-                    b.Property<string>("Placa")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("HoraEntrada")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("HoraSaida")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdTipo")
                         .HasColumnType("int");
@@ -105,7 +159,11 @@ namespace SistemaDeEstacionamento.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Placa");
+                    b.Property<string>("Placa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("IdTipo");
 
@@ -116,11 +174,45 @@ namespace SistemaDeEstacionamento.Migrations
                 {
                     b.HasOne("SistemaDeEstacionamento.Models.Veiculo", "Veiculo")
                         .WithMany()
-                        .HasForeignKey("Placa")
+                        .HasForeignKey("IdVeiculo")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Veiculo");
+                });
+
+            modelBuilder.Entity("SistemaDeEstacionamento.Models.ClienteVeiculoValor", b =>
+                {
+                    b.HasOne("SistemaDeEstacionamento.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("IdCliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SistemaDeEstacionamento.Models.TipoVeiculo", "TipoVeiculo")
+                        .WithMany()
+                        .HasForeignKey("IdTipo");
+
+                    b.HasOne("SistemaDeEstacionamento.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("IdVeiculo");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("TipoVeiculo");
+
+                    b.Navigation("Veiculo");
+                });
+
+            modelBuilder.Entity("SistemaDeEstacionamento.Models.ValorVeiculo", b =>
+                {
+                    b.HasOne("SistemaDeEstacionamento.Models.TipoVeiculo", "TipoVeiculo")
+                        .WithMany()
+                        .HasForeignKey("IdTipoVeiculo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoVeiculo");
                 });
 
             modelBuilder.Entity("SistemaDeEstacionamento.Models.Veiculo", b =>

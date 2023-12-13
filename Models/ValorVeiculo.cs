@@ -7,8 +7,13 @@ namespace SistemaDeEstacionamento.Models
     public class ValorVeiculo 
     {
         [Key]
-        public int IdTipo { get; set; }
-        public int Dia { get; set; }
+        public int Id { get; set; }
+        [ForeignKey("TipoVeiculo")]
+        public int IdTipoVeiculo { get; set; }
+        public virtual TipoVeiculo TipoVeiculo { get; set; }
+        [ForeignKey("TipoDia")]
+        public int IdDia { get; set; }
+        public virtual TipoDia TipoDia { get; set; }
         public float ValorHora { get; set; }
         public float? Promocao { get; set; }
     }
