@@ -14,6 +14,7 @@
             <th scope="col">Nome do Cliente</th>
             <th scope="col">Local</th>
             <th scope="col">Hora da Entrada</th>
+            <th scope="col">Registrar Saída</th>
         </tr>
     </thead>
     <tbody>
@@ -28,31 +29,12 @@
                         <td>@item.NomeCliente</td>
                         <td>@item.Local</td>
                         <td>@item.HoraEntrada</td>
+                        <td><a href="/Home/RegistrarSaida" class="btn btn-danger">Registrar Saída</a></td>
                     </tr>
                 }
 
             }
         }
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>mdo</td>
-            <td>mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>fat</td>
-            <td>mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>twitter</td>
-            <td>mdo</td>
-        </tr>
     </tbody>
 </table>
 

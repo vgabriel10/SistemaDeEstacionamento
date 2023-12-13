@@ -98,6 +98,15 @@ namespace SistemaDeEstacionamento.Controllers
             //Response.Redirect("/Home/AlterarPreco");
         }
 
+        public IActionResult RegistrarSaida()
+        {
+            var listaDias = _estacionamentoService.RetornaTiposDias();
+            ViewBag.listaDias = listaDias;
+            var listarPrecos = _faturamentoService.ListarPrecosVeiculos(1);
+            ViewBag.PrecoDia = listarPrecos;
+            return View();
+        }
+
         public IActionResult Faturamento()
         {
             return View();

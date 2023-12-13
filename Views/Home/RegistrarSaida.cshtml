@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Registrar Saída";
+
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+
+<form action="/Home/RegistrarEntradaVeiculo" method="post">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Nome do Cliente Responsável:</label>
+            <input name="NomeCliente" type="text" class="form-control" id="inputEmail4" placeholder="Nome" readonly>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">CPF:</label>
+            <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00" readonly>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Telefone:</label>
+            <input name="Telefone" type="text" class="form-control" id="inputEmail4" placeholder="(00)90000-0000">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Nome do cliente (opcional):</label>
+            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="ddlTipoVeiculo">Tipo de veículo:</label>
+            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="" readonly>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Nome do Veículo:</label>
+            <input name="NomeVeiculo" type="text" class="form-control" id="inputEmail4" placeholder="Nome" readonly>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Placa:</label>
+            <input name="NomeCliente" type="text" class="form-control" id="inputEmail4" placeholder="" readonly>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Local:</label>
+            <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="" readonly>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Hora da Entrada:</label>
+            <input name="HoraEntrada" type="time" class="form-control" readonly />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Hora da Saída:</label>
+            <input name="HoraEntrada" type="time" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Tipo de pagamento:</label>
+            <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+                <option selected>Escolha uma opção</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Desconto:</label>
+            <input name="HoraEntrada" type="number" class="form-control" placeholder="%" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Valor Bruto:</label>
+            <input name="HoraEntrada" type="number" class="form-control" placeholder="" />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Valor total:</label>
+            <input name="HoraEntrada" type="number" class="form-control" placeholder="" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <div class="cs-form">
+                <button class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="row">
+
+    <div class="form-group col-md-6">
+    <label for="inputPassword4">Placa:</label>
+    <input name="Placa" type="text" class="form-control" id="inputPassword4" placeholder="Placa">
+    </div>
+    </div>
+    <div class="row">
+    <div class="form-group col-md-6">
+    <div class="cs-form">
+    <label for="inputPassword4">Hora da Entrada:</label>
+    <input name="HoraEntrada" type="time" class="form-control" value="10:05 AM" />
+    </div>
+    </div>
+    <div class="form-group col-md-6">
+    <div class="cs-form">
+    <label for="inputPassword4">Local:</label>
+    <input name="Local" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+    </div>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="form-group col-md-6">
+    <div class="cs-form">
+    <label for="inputPassword4">Forma de Pagamento:</label>
+    <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+    <option selected>Escolha uma opção</option>
+
+    </select>
+    </div>
+    </div>
+    <div class="form-group col-md-6">
+    <div class="cs-form">
+    <label for="inputPassword4">Local:</label>
+    <input name="Local" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+    </div>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="form-group col-md-6">
+    <div class="cs-form">
+    <button class="btn btn-primary">Salvar</button>
+    </div>
+    </div>
+    </div>*@
+
+
+</form>
+
