@@ -1,0 +1,145 @@
+﻿@using System.Globalization;
+@{
+    ViewData["Title"] = "Adicionar entrada de veículo";
+    List<TipoVeiculo> tiposVeiculos = ViewBag.TiposVeiculos;
+    List<TipoDia> tipoDia = ViewBag.TipoDia;
+}
+<h1>@ViewData["Title"]</h1>
+
+@if (TempData["ok"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        Entrada de veículo registrada com sucesso!
+    </div>
+}
+
+
+<form action="/Estacionamento/RegistrarEntradaVeiculo" method="post">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Nome do Cliente Responsável:</label>
+            <input name="NomeCliente" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">CPF:</label>
+            <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00">
+        </div>
+    </div>
+    <div class="row">
+        @*<div class="form-group col-md-6">
+        <label for="inputEmail4">Nome do cliente (opcional):</label>
+        <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+        </div>
+        <div class="form-group col-md-6">
+        <label for="inputPassword4">CPF:</label>
+        <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00">
+        </div>*@
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Telefone:</label>
+            <input name="Telefone" type="text" class="form-control" id="inputEmail4" placeholder="(00)900-0000">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Nome do cliente (opcional):</label>
+            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="ddlTipoVeiculo">Tipo de veículo:</label>
+            <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+                <option selected>Escolha uma opção</option>
+                @{
+                    foreach (var opcao in tiposVeiculos)
+                    {
+                        <option value=@opcao.Id>@opcao.Nome</option>
+                    }
+                }
+                @*<option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>*@
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Dia na semana:</label>
+            <select name="TipoDia" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+                @{
+                    DateTime dataAtual = DateTime.Now;
+                    // Adiciona mais um pois no banco a enumeração começa com 1
+                    int idDia = (int)dataAtual.DayOfWeek + 1;
+                    var diaAtual = tipoDia.Where(dia => dia.Id == idDia).FirstOrDefault();
+                    <option value=@diaAtual.Id>@diaAtual.Dia</option>
+                }
+                <option value=8>Feriado</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Nome do Veículo:</label>
+            <input name="NomeVeiculo" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Placa:</label>
+            <input name="Placa" type="text" class="form-control" id="inputPassword4" placeholder="Placa">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <div class="cs-form">
+                <label for="inputPassword4">Hora da Entrada:</label>
+                <input name="HoraEntrada" type="time" class="form-control" value="10:05 AM" />
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="cs-form">
+                <label for="inputPassword4">Local:</label>
+                <input name="Local" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <div class="cs-form">
+                <button class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+
+    @* <div class="form-group">
+    <label for="inputAddress">Endereço</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="Rua dos Bobos, nº 0">
+    </div>
+    <div class="form-group">
+    <label for="inputAddress2">Endereço 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartamento, hotel, casa, etc.">
+    </div>
+    <div class="form-row">
+    <div class="form-group col-md-6">
+    <label for="inputCity">Cidade</label>
+    <input type="text" class="form-control" id="inputCity">
+    </div>
+    <div class="form-group col-md-4">
+    <label for="inputEstado">Estado</label>
+    <select id="inputEstado" class="form-control">
+    <option selected>Escolher...</option>
+    <option>...</option>
+    </select>
+    </div>
+    <div class="form-group col-md-2">
+    <label for="inputCEP">CEP</label>
+    <input type="text" class="form-control" id="inputCEP">
+    </div>
+    </div>
+    <div class="form-group">
+    <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="gridCheck">
+    <label class="form-check-label" for="gridCheck">
+    Clique em mim
+    </label>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Entrar</button>*@
+</form>
+

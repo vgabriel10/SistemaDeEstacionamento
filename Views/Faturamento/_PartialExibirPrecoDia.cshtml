@@ -25,14 +25,14 @@
         let valorHora = parseFloat($('#txtPreco').val());
         console.log(valorHora);
         $.ajax({
-            url: '/Home/AlterarPrecoDia',
+            url: '/Faturamento/AlterarPrecoDia',
             type: 'POST',
             data: { tipoVeiculo: tipoVeiculo, dia: diaSelecinado, valor: valorHora },
             success: function (response) {
                 console.log('Resposta do servidor:', response);
                 alert('Deu certo!');
                 $('#btnFecharModal').click();
-                $('#partialView_ExibirPrecoDia').load(`/Home/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+                $('#partialView_ExibirPrecoDia').load(`/Faturamento/PartialExibirPrecoDia?dia=${diaSelecinado}`);
             },
             error: function (error) {
                 console.error('Erro na solicitação:', error);
@@ -43,12 +43,12 @@
     function ExcluirPreco(idTipoVeiculo){
         let diaSelecinado = parseInt($("#ddlDia option:selected").val());
         $.ajax({
-            url: '/Home/ExcluirTipoVeiculo',
+            url: '/Faturamento/ExcluirTipoVeiculo',
             type: 'POST',
             data: { idTipoVeiculo: idTipoVeiculo },
             success: function (response) {
                 alert('Deu certo!');
-                $('#partialView_ExibirPrecoDia').load(`/Home/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+                $('#partialView_ExibirPrecoDia').load(`/Faturamento/PartialExibirPrecoDia?dia=${diaSelecinado}`);
             },
             error: function (error) {
                 console.error('Erro na solicitação:', error);

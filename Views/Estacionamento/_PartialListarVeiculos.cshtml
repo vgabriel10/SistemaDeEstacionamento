@@ -1,0 +1,103 @@
+﻿@using SistemaDeEstacionamento.Models.DTO;
+@*@{
+    ViewData["Title"] = "Lista de Veículos";
+    List<VeiculosNoEstacionamentoDTO> veiculosEstacionados = ViewBag.VeiculosEstacionados;
+
+    @model List<VeiculosNoEstacionamentoDTO>;
+
+}*@
+
+@model List<DadosEntradaSaidaVeiculoDTO>
+
+<h1>@ViewData["Title"]</h1>
+
+<script>
+
+    function RegistrarSaida(idVeiculo, idCliente) {
+        console.log(idVeiculo);
+        console.log(idCliente);
+        $.ajax({
+            url: '/Estacionamento/RegistrarSaida',
+            type: 'POST',
+            data: { idVeiculo: idVeiculo, idCliente: idCliente },
+            success: function (response) {
+                console.log('Resposta do servidor:', response);
+                alert('Deu certo!');
+                window.location.href = 'RegistrarSaida';
+                //window.location.href = '/Home/RegistrarSaida';
+                //console.log(response.url);
+                //window.location.href = response.url;
+            },
+            error: function (error) {
+                console.error('Erro na solicitação:', error);
+            }
+        });
+    }
+
+</script>
+
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Placa</th>
+            <th scope="col">Veículo</th>
+            <th scope="col">Nome do Cliente</th>
+            <th scope="col">Local</th>
+            <th scope="col">Hora de Entrada</th>
+            <th scope="col">Hora de Saída</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+
+            if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Placa</td>
+                        <td>@item.NomeVeiculo</td>
+                        <td>@item.NomeCliente</td>
+                        <td>@item.Local</td>
+                        <td>@item.HoraEntrada</td>
+                        <td>@item.HoraSaida</td>
+                        @{
+                            if (@item.HoraSaida != null)
+                            {
+                                <td><a href="#" class="btn btn-info">Detalhes</a></td>
+                            }
+                            else
+                            {
+                                <td><a href="/Estacionamento/RegistrarSaida?idVeiculo=@item.IdVeiculo&idCliente=@item.IdCliente" class="btn btn-danger">Registrar Saída</a></td>
+                            }
+                        }
+                        
+
+                    </tr>
+
+                }
+
+            }
+
+            //if (veiculosEstacionados != null && veiculosEstacionados.Count > 0)
+            //{
+            //    foreach (var item in veiculosEstacionados)
+            //    {
+            //        <tr>
+            //            <td>@item.Placa</td>
+            //            <td>@item.NomeVeiculo</td>
+            //            <td>@item.NomeCliente</td>
+            //            <td>@item.Local</td>
+            //            <td>@item.HoraEntrada</td>
+            //            <td><a href="/Home/RegistrarSaida?idVeiculo=@item.IdVeiculo&idCliente=@item.IdCliente" class="btn btn-danger">Registrar Saída</a></td>
+            //        </tr>
+
+            //    }
+
+            //}
+        }
+    </tbody>
+</table>
+

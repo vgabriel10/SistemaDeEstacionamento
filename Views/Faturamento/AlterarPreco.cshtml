@@ -12,7 +12,7 @@
 
     function Carregar(e) {
         let diaSelecinado = parseInt($("#ddlDia option:selected").val());
-        $('#partialView_ExibirPrecoDia').load(`/Home/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+        $('#partialView_ExibirPrecoDia').load(`/Faturamento/PartialExibirPrecoDia?dia=${diaSelecinado}`);
     }
 
 
@@ -41,7 +41,7 @@
 
 
 <h2>Adicionar tipo de veiculo</h2>
-<form action="/Home/AdicionarNovoTipoVeiculo" method="post">
+<form action="/Faturamento/AdicionarNovoTipoVeiculo" method="post">
     <div class="row">
         <div class="form-group col-md-3">
             <label for="inputEmail4">Tipo de veículo:</label>
