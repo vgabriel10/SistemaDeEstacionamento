@@ -11,9 +11,12 @@ namespace SistemaDeEstacionamento.Models
         public string Nome { get; set; }
         public string Placa { get; set; }
         [ForeignKey("TipoVeiculo")]
-        public int IdTipo { get; set; }
+        public int IdTipoVeiculo { get; set; }
         public virtual TipoVeiculo TipoVeiculo { get; set; }
         public string? LocalEstacionado { get; set; }
+        [ForeignKey("TipoDia")]
+        public int IdTipoDia { get; set; }
+        public virtual TipoDia TipoDia { get; set; }
         public DateTime? HoraEntrada { get; set; }
         public DateTime? HoraSaida { get; set; }
     }

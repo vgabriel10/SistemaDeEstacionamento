@@ -23,9 +23,34 @@ namespace SistemaDeEstacionamento.Models.DAO
             //throw new NotImplementedException();
         }
 
-        public void RegistrarSaidaVeiculo()
+        public void RegistrarSaidaVeiculo(int id, DateTime horaSaida)
+        {
+            _estacionamentoDAO.RegistrarSaidaVeiculo(id, horaSaida);
+        }
+
+        public Cliente RetornarClientePorCpf(string cpf)
         {
             throw new NotImplementedException();
+        }
+
+        public Cliente RetornarClientePorId(int id)
+        {
+            return _estacionamentoDAO.RetornarClientePorId(id);
+        }
+
+        public int RetornarIdDiaPeloNome(string dia)
+        {
+            return _estacionamentoDAO.RetornarIdDiaPeloNome(dia);
+        }
+
+        public List<DadosEntradaSaidaVeiculoDTO> RetornarUltimos50Veiculos()
+        {
+            return _estacionamentoDAO.RetornarUltimos50Veiculos();
+        }
+
+        public Veiculo RetornarVeiculoPorId(int id)
+        {
+            return _estacionamentoDAO.RetornarVeiculoPorId(id);
         }
 
         public List<VeiculosNoEstacionamentoDTO> RetornarVeiculosEstacionados()

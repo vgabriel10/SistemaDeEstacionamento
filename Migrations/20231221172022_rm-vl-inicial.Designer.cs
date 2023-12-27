@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeEstacionamento.Models.DAO;
 
@@ -11,9 +12,11 @@ using SistemaDeEstacionamento.Models.DAO;
 namespace SistemaDeEstacionamento.Migrations
 {
     [DbContext(typeof(BaseEstacionamentoContext))]
-    partial class BaseEstacionamentoContextModelSnapshot : ModelSnapshot
+    [Migration("20231221172022_rm-vl-inicial")]
+    partial class rmvlinicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,11 +80,11 @@ namespace SistemaDeEstacionamento.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("ValorBruto")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("ValorBruto")
+                        .HasColumnType("real");
 
-                    b.Property<decimal>("ValorTotal")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("ValorTotal")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -171,20 +174,6 @@ namespace SistemaDeEstacionamento.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TiposVeiculos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Nome = "Moto",
-                            Situacao = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Nome = "Carro",
-                            Situacao = true
-                        });
                 });
 
             modelBuilder.Entity("SistemaDeEstacionamento.Models.ValorVeiculo", b =>
@@ -201,11 +190,11 @@ namespace SistemaDeEstacionamento.Migrations
                     b.Property<int>("IdTipoVeiculo")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Promocao")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float?>("Promocao")
+                        .HasColumnType("real");
 
-                    b.Property<decimal>("ValorHora")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("ValorHora")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -214,120 +203,6 @@ namespace SistemaDeEstacionamento.Migrations
                     b.HasIndex("IdTipoVeiculo");
 
                     b.ToTable("ValorVeiculo");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IdDia = 1,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IdDia = 2,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IdDia = 3,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IdDia = 4,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IdDia = 5,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            IdDia = 6,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            IdDia = 7,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            IdDia = 8,
-                            IdTipoVeiculo = 1,
-                            ValorHora = 5m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            IdDia = 1,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        },
-                        new
-                        {
-                            Id = 10,
-                            IdDia = 2,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        },
-                        new
-                        {
-                            Id = 11,
-                            IdDia = 3,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        },
-                        new
-                        {
-                            Id = 12,
-                            IdDia = 4,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        },
-                        new
-                        {
-                            Id = 13,
-                            IdDia = 5,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        },
-                        new
-                        {
-                            Id = 14,
-                            IdDia = 6,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        },
-                        new
-                        {
-                            Id = 15,
-                            IdDia = 7,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        },
-                        new
-                        {
-                            Id = 16,
-                            IdDia = 8,
-                            IdTipoVeiculo = 2,
-                            ValorHora = 10m
-                        });
                 });
 
             modelBuilder.Entity("SistemaDeEstacionamento.Models.Veiculo", b =>

@@ -14,7 +14,7 @@ namespace SistemaDeEstacionamento.Models
         [ForeignKey("TipoDia")]
         public int IdDia { get; set; }
         public virtual TipoDia TipoDia { get; set; }
-        public float ValorHora { get; set; }
-        public float? Promocao { get; set; }
+        public decimal ValorHora { get; set; }
+        public decimal? Promocao { get; set; }
     }
 }

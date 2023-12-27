@@ -45,6 +45,8 @@ namespace SistemaDeEstacionamento.Controllers
         {
             List<TipoVeiculo> tiposVeiculos = _estacionamentoService.TiposVeiculos();
             ViewBag.TiposVeiculos = tiposVeiculos;
+            List<TipoDia> diaAtual = _estacionamentoService.RetornaTiposDias();
+            ViewBag.TipoDia = diaAtual;
             return View();
         }
 
@@ -80,13 +82,13 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialExibirPrecoDia", listarPrecos);
         }
 
-        public void AdicionarNovoTipoVeiculo(string nomeTipo, float valorPadrao)
+        public void AdicionarNovoTipoVeiculo(string nomeTipo, decimal valorPadrao)
         {
             _faturamentoService.AdicionarNovoTipoVeiculo(nomeTipo, valorPadrao);
             Response.Redirect("/Home/AlterarPreco");
         }
 
-        public void AlterarPrecoDia(int tipoVeiculo, int dia , float valor)
+        public void AlterarPrecoDia(int tipoVeiculo, int dia , decimal valor)
         {
             _faturamentoService.AlterarValorTipoVeiculo(tipoVeiculo, dia, valor);
             //Response.Redirect("/Home/AlterarPreco");
@@ -97,14 +99,42 @@ namespace SistemaDeEstacionamento.Controllers
             _faturamentoService.ExcluirTipoVeiculo(idTipoVeiculo);
             //Response.Redirect("/Home/AlterarPreco");
         }
-
-        public IActionResult RegistrarSaida()
+        [HttpGet]
+        [HttpPost]
+        public IActionResult RegistrarSaida(int idVeiculo, int idCliente)
         {
-            var listaDias = _estacionamentoService.RetornaTiposDias();
-            ViewBag.listaDias = listaDias;
-            var listarPrecos = _faturamentoService.ListarPrecosVeiculos(1);
-            ViewBag.PrecoDia = listarPrecos;
+            Veiculo veiculo = _estacionamentoService.RetornarVeiculoPorId(idVeiculo);
+            Cliente cliente = _estacionamentoService.RetornarClientePorId(idCliente);
+            ViewBag.Veiculo = veiculo;
+            ViewBag.Cliente = cliente;
+            //Response.Redirect("/Home/RegistrarSaida");
             return View();
+        }
+
+        public RegistrarSaidaDTO CalcularValorPorHora(RegistrarSaidaDTO dadosVeiculoSaida)
+        {
+            return _faturamentoService.CalcularValorPorHora(dadosVeiculoSaida);
+        }
+
+        public void RegistrarSaidaVeiculo(RegistrarSaidaDTO dadosVeiculoSaida)
+        {
+            _estacionamentoService.RegistrarSaidaVeiculo(dadosVeiculoSaida.IdVeiculo, dadosVeiculoSaida.HoraSaida);
+            _faturamentoService.RegistrarPagamentoPorHoraEstacionada(dadosVeiculoSaida);
+        }
+
+        public void RegistrarSaidaAvulsaVeiculo(RegistrarSaidaDTO dadosVeiculoSaida)
+        {
+            _estacionamentoService.RegistrarSaidaVeiculo(dadosVeiculoSaida.IdVeiculo, dadosVeiculoSaida.HoraSaida);
+            _faturamentoService.RegistrarPagamentoAvulso(dadosVeiculoSaida);
+        }
+
+        public IActionResult PartialListarVeiculos()
+        {
+            var listaVeiculos = _estacionamentoService.RetornarUltimos50Veiculos();
+            //ViewBag.VeiculosEstacionados = listaVeiculos;
+            //var listarPrecos = _faturamentoService.ListarPrecosVeiculos(dia);
+            //ViewBag.PrecoDia = listarPrecos;
+            return PartialView("_PartialListarVeiculos", listaVeiculos);
         }
 
         public IActionResult Faturamento()

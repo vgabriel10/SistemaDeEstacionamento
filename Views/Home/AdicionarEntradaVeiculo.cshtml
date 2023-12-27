@@ -1,6 +1,8 @@
-﻿@{
+﻿@using System.Globalization;
+@{
     ViewData["Title"] = "Adicionar entrada de veículo";
     List<TipoVeiculo> tiposVeiculos = ViewBag.TiposVeiculos;
+    List<TipoDia> tipoDia = ViewBag.TipoDia;
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -25,12 +27,12 @@
     </div>
     <div class="row">
         @*<div class="form-group col-md-6">
-            <label for="inputEmail4">Nome do cliente (opcional):</label>
-            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+        <label for="inputEmail4">Nome do cliente (opcional):</label>
+        <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
         </div>
         <div class="form-group col-md-6">
-            <label for="inputPassword4">CPF:</label>
-            <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00">
+        <label for="inputPassword4">CPF:</label>
+        <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00">
         </div>*@
         <div class="form-group col-md-6">
             <label for="inputEmail4">Telefone:</label>
@@ -47,7 +49,7 @@
             <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
                 <option selected>Escolha uma opção</option>
                 @{
-                    foreach(var opcao in tiposVeiculos)
+                    foreach (var opcao in tiposVeiculos)
                     {
                         <option value=@opcao.Id>@opcao.Nome</option>
                     }
@@ -55,6 +57,20 @@
                 @*<option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>*@
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Dia na semana:</label>
+            <select name="TipoDia" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+                @{
+                    DateTime dataAtual = DateTime.Now;
+                    // Adiciona mais um pois no banco a enumeração começa com 1
+                    int idDia = (int)dataAtual.DayOfWeek + 1;
+                    var diaAtual = tipoDia.Where(dia => dia.Id == idDia).FirstOrDefault();
+                    <option value=@diaAtual.Id>@diaAtual.Dia</option>
+                }
+                <option value=8>Feriado</option>
+
             </select>
         </div>
     </div>
@@ -90,7 +106,7 @@
         </div>
     </div>
 
-    
+
     @* <div class="form-group">
     <label for="inputAddress">Endereço</label>
     <input type="text" class="form-control" id="inputAddress" placeholder="Rua dos Bobos, nº 0">

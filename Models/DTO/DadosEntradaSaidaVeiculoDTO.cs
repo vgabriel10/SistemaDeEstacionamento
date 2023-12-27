@@ -1,7 +1,7 @@
 ﻿
 namespace SistemaDeEstacionamento.Models.DTO
 {
-    public class VeiculosNoEstacionamentoDTO
+    public class DadosEntradaSaidaVeiculoDTO
     {
         public int IdVeiculo { get; set; }
         public int IdCliente { get; set; }
@@ -15,6 +15,7 @@ namespace SistemaDeEstacionamento.Models.DTO
         public string NomeVeiculo { get; set; }
         public string Placa { get; set; }
         public DateTime HoraEntrada { get; set; }
+        public DateTime? HoraSaida { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeEstacionamento.Models.DTO;
 using System.Security.Cryptography;
 
 namespace SistemaDeEstacionamento.Models.DAO
@@ -12,7 +13,7 @@ namespace SistemaDeEstacionamento.Models.DAO
             _dbContext = dbContext;
         }
 
-        public void AdicionarNovoTipoVeiculo(string nome, float valor)
+        public void AdicionarNovoTipoVeiculo(string nome, decimal valor)
         {
             var tipoVeiculo = new TipoVeiculo
             {
@@ -45,13 +46,43 @@ namespace SistemaDeEstacionamento.Models.DAO
             //precoDia.ValorHora =  
         }
 
-        public void AlterarValorTipoVeiculo(int tipoVeiculo, int dia, float valor)
+        public void AlterarValorTipoVeiculo(int tipoVeiculo, int dia, decimal valor)
         {
             ValorVeiculo valorVeiculo = _dbContext.ValorVeiculo.Where(vv => vv.IdTipoVeiculo == tipoVeiculo && vv.IdDia == dia).FirstOrDefault();
             valorVeiculo.ValorHora = valor;
             _dbContext.Update(valorVeiculo);
             _dbContext.SaveChanges();
 
+        }
+
+        public void RegistrarPagamentoPorHoraEstacionada(RegistrarSaidaDTO dadosVeiculoSaida)
+        {
+            _dbContext.ClienteVeiculoValor.Add(new ClienteVeiculoValor
+            {
+                IdCliente = dadosVeiculoSaida.IdCliente,
+                IdVeiculo = dadosVeiculoSaida.IdVeiculo,
+                IdTipoVeiculo = dadosVeiculoSaida.TipoVeiculo,
+                TempoEstacionado = dadosVeiculoSaida.TempoEstacionado,
+                DataDePagamento = DateTime.Now,
+                ValorBruto = dadosVeiculoSaida.ValorBruto,
+                ValorTotal = dadosVeiculoSaida.ValorTotal  
+            });
+            _dbContext.SaveChanges();
+        }
+
+        public void RegistrarPagamentoAvulso(RegistrarSaidaDTO dadosVeiculoSaida)
+        {
+            _dbContext.ClienteVeiculoValor.Add(new ClienteVeiculoValor
+            {
+                IdCliente = dadosVeiculoSaida.IdCliente,
+                IdVeiculo = dadosVeiculoSaida.IdVeiculo,
+                IdTipoVeiculo = dadosVeiculoSaida.TipoVeiculo,
+                TempoEstacionado = dadosVeiculoSaida.TempoEstacionado,
+                DataDePagamento = DateTime.Now,
+                ValorBruto = dadosVeiculoSaida.ValorAvulso,
+                ValorTotal = dadosVeiculoSaida.ValorAvulso
+            });
+            _dbContext.SaveChanges();
         }
 
         public void ExcluirTipoVeiculo(int id)
@@ -65,6 +96,13 @@ namespace SistemaDeEstacionamento.Models.DAO
         public List<ValorVeiculo> ListarPrecosVeiculos(int dia)
         {
             return _dbContext.ValorVeiculo.Where(vv => vv.IdDia == dia && vv.TipoVeiculo.Situacao == true).ToList();
+        }
+
+        public decimal RetornaPrecoVeiculoPorDia(int idTipoVeiculo, int idTipoDia)
+        {
+            decimal valor = _dbContext.ValorVeiculo.Where(vv => vv.IdTipoVeiculo == idTipoVeiculo && vv.IdDia == idTipoDia)
+                .Select(vv => vv.ValorHora).FirstOrDefault();
+            return valor;
         }
     }
 }

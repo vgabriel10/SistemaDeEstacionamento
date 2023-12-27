@@ -7,6 +7,16 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>*@
 
+<script>
+
+    $(function () {
+        $('#partialView_ListarVeiculos').load(`/Home/PartialListarVeiculos`);
+    });
+
+    
+
+</script>
+
 
 <div class="row">
     <div class="col-md-4">
@@ -69,5 +79,22 @@
         <p>Saídas:</p>
         <p>Saldo:</p>
     </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="partialView_ListarVeiculos">
+            @await Html.PartialAsync("_PartialListarVeiculos")
+        </div>
+    </div>
+
+    @*<div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-4">
+
+    </div>*@
 
 </div>

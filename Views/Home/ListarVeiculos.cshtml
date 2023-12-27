@@ -5,6 +5,31 @@
 }
 <h1>@ViewData["Title"]</h1>
 
+<script>
+
+    function RegistrarSaida(idVeiculo, idCliente) {
+        console.log(idVeiculo);
+        console.log(idCliente);
+        $.ajax({
+            url: '/Home/RegistrarSaida',
+           type: 'POST',
+           data: { idVeiculo: idVeiculo, idCliente: idCliente },
+            success: function (response) {
+                console.log('Resposta do servidor:', response);
+                alert('Deu certo!');
+                window.location.href = 'RegistrarSaida';
+                //window.location.href = '/Home/RegistrarSaida';
+                //console.log(response.url);
+                //window.location.href = response.url;
+            },
+            error: function (error) {
+                console.error('Erro na solicitação:', error);
+            }
+        });
+    }
+
+</script>
+
 
 <table class="table table-dark table-striped">
     <thead>
@@ -29,8 +54,9 @@
                         <td>@item.NomeCliente</td>
                         <td>@item.Local</td>
                         <td>@item.HoraEntrada</td>
-                        <td><a href="/Home/RegistrarSaida" class="btn btn-danger">Registrar Saída</a></td>
+                        <td><a href="/Home/RegistrarSaida?idVeiculo=@item.IdVeiculo&idCliente=@item.IdCliente" class="btn btn-danger">Registrar Saída</a></td>
                     </tr>
+                    
                 }
 
             }
