@@ -10,38 +10,10 @@
 </script>
 
 
-@*<table class="table table-dark table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Total de vagas</th>
-            <th scope="col">Vagas Disponíveis</th>
-            <th scope="col">Vagas Ocupadas</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            if (Model != null)
-            {
-
-                <tr>
-                    <td>@Model.TotalVagas</td>
-                    <td>@Model.VagasDisponiveis</td>
-                    <td>@Model.VagasOcupadas</td>
-                </tr>
-            }
-            else
-            {
-                <p>Você não informou a quantidade de vagas disponíveis!</p>
-            }
-        }
-    </tbody>
-</table>*@
-
 <table class="table table-dark table-striped">
     @{
-        if (Model != null)
+        if (Model.TotalVagas != null && Model.TotalVagas != 0)
         {
-
             <tr>
                 <td scope="col">Total de vagas: </td>
                 <td>@Model.TotalVagas</td>
@@ -58,8 +30,35 @@
         }
         else
         {
-            <p>Você não informou a quantidade de vagas disponíveis!</p>
+            <p>Você não informou o total de vagas do estacionamento!</p>
+            //<a class="btn btn-primary" href="#"></a>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="mdo">Clique aqui para informar a quantidade de vagas!</button>
         }
     }
 </table>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar preço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Total de Vagas:</label>
+                        <input class="form-control" id="txtPreco" type="number" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="">Concluir</button>
+                <button id="btnFecharModal" type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
