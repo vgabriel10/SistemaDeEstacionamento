@@ -15,6 +15,11 @@ namespace SistemaDeEstacionamento.Models.DAO
             _clienteDAO = clienteDAO;
             _estacionamentoDAO = estacionamentoDAO;
         }
+
+        public Vaga informacoesSobreVagas()
+        {
+            return _estacionamentoDAO.informacoesSobreVagas();
+        }
         #endregion
 
         public void RegistrarEntradaVeiculo(VeiculosNoEstacionamentoDTO dadosVeiculo)

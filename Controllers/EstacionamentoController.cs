@@ -91,6 +91,12 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialListarVeiculos", listaVeiculos);
         }
 
+        public IActionResult PartialRetornarVagas()
+        {
+            Vaga infoVagas = _estacionamentoService.informacoesSobreVagas();
+            return PartialView("_PartialRetornarVagas", infoVagas);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

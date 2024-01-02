@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeEstacionamento.Models.DAO;
 
@@ -11,9 +12,11 @@ using SistemaDeEstacionamento.Models.DAO;
 namespace SistemaDeEstacionamento.Migrations
 {
     [DbContext(typeof(BaseEstacionamentoContext))]
-    partial class BaseEstacionamentoContextModelSnapshot : ModelSnapshot
+    [Migration("20240102194331_add-tabela-vaga1")]
+    partial class addtabelavaga1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,7 +195,7 @@ namespace SistemaDeEstacionamento.Migrations
                     b.Property<int>("TotalVagas")
                         .HasColumnType("int");
 
-                    b.Property<int>("VagasDisponiveis")
+                    b.Property<int>("VagasDiponiveis")
                         .HasColumnType("int");
 
                     b.Property<int>("VagasOcupadas")

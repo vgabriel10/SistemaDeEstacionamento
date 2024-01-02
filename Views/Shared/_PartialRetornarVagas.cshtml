@@ -1,0 +1,65 @@
+﻿@using SistemaDeEstacionamento.Models.DTO;
+
+@model Vaga
+
+<h1>@ViewData["Title"]</h1>
+
+<script>
+
+
+</script>
+
+
+@*<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Total de vagas</th>
+            <th scope="col">Vagas Disponíveis</th>
+            <th scope="col">Vagas Ocupadas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null)
+            {
+
+                <tr>
+                    <td>@Model.TotalVagas</td>
+                    <td>@Model.VagasDisponiveis</td>
+                    <td>@Model.VagasOcupadas</td>
+                </tr>
+            }
+            else
+            {
+                <p>Você não informou a quantidade de vagas disponíveis!</p>
+            }
+        }
+    </tbody>
+</table>*@
+
+<table class="table table-dark table-striped">
+    @{
+        if (Model != null)
+        {
+
+            <tr>
+                <td scope="col">Total de vagas: </td>
+                <td>@Model.TotalVagas</td>
+            </tr>
+            <tr>
+                <td scope="col">Vagas Disponíveis</td>
+                <td>@Model.VagasDisponiveis</td>
+
+            </tr>
+            <tr>
+                <td scope="col">Vagas Ocupadas</td>
+                <td>@Model.VagasOcupadas</td>
+            </tr>
+        }
+        else
+        {
+            <p>Você não informou a quantidade de vagas disponíveis!</p>
+        }
+    }
+</table>
+

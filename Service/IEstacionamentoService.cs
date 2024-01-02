@@ -16,6 +16,6 @@ namespace SistemaDeEstacionamento.Service
         public Cliente RetornarClientePorId(int id);
         public Cliente RetornarClientePorCpf(string cpf);
         public int RetornarIdDiaPeloNome(string dia);
-
+        public Vaga informacoesSobreVagas();
     }
 }

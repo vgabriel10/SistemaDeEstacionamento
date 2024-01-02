@@ -51,11 +51,17 @@ namespace SistemaDeEstacionamento.Controllers
             return View();
         }
 
-        public IActionResult PartialExibirPrecoDia(int dia)
+        public IActionResult PartialExibirCrudPrecoDia(int dia)
         {
             var listarPrecos = _faturamentoService.ListarPrecosVeiculos(dia);
             ViewBag.PrecoDia = listarPrecos;
-            return PartialView("_PartialExibirPrecoDia", listarPrecos);
+            return PartialView("_PartialExibirCrudPrecoDia", listarPrecos);
+        }
+
+        public IActionResult PartialRetornarPrecoDia(int dia)
+        {
+            var listarPrecos = _faturamentoService.ListarPrecosVeiculos(dia);
+            return PartialView("_PartialRetornarPrecoDia", listarPrecos);
         }
 
         public void AdicionarNovoTipoVeiculo(string nomeTipo, decimal valorPadrao)

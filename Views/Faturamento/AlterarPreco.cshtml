@@ -12,7 +12,7 @@
 
     function Carregar(e) {
         let diaSelecinado = parseInt($("#ddlDia option:selected").val());
-        $('#partialView_ExibirPrecoDia').load(`/Faturamento/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+        $('#partialView_ExibirPrecoDia').load(`/Faturamento/PartialExibirCrudPrecoDia?dia=${diaSelecinado}`);
     }
 
 
@@ -36,7 +36,7 @@
 </div>
 
 <div id="partialView_ExibirPrecoDia">
-    @await Html.PartialAsync("_PartialExibirPrecoDia",infoValorDia)
+    @await Html.PartialAsync("_PartialExibirCrudPrecoDia",infoValorDia)
 </div>
 
 

@@ -1,5 +1,11 @@
-﻿@{
+﻿@using System.Globalization;
+@{
     ViewData["Title"] = "Home Page";
+    CultureInfo culturaBrasileira = new CultureInfo("pt-BR");
+    DateTime data = new DateTime();
+    data = DateTime.Now;
+    string diaDaSemana = culturaBrasileira.DateTimeFormat.GetDayName(data.DayOfWeek);
+    int idData = (int)data.DayOfWeek;
 }
 
 @*<div class="text-center">
@@ -7,25 +13,32 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>*@
 
+
 <script>
 
     $(function () {
+        let dia = '@idData'
         $('#partialView_ListarVeiculos').load(`/Estacionamento/PartialListarVeiculos`);
+        $('#partialView_RetornarPrecoDia').load(`/Faturamento/PartialRetornarPrecoDia?dia=${dia}`);
+        $('#partialView_RetornarVagas').load(`/Estacionamento/PartialRetornarVagas`);
     });
 
-    
+
 
 </script>
 
+<div class="text-center">
+    <h2>@diaDaSemana, @data.ToShortDateString()</h2>
+</div>
 
-<div class="row">
+
+<div class="row" style="margin-top:30px;">
     <div class="col-md-4">
         <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+            <img src="assets/dinheiro-png.png" class="rounded mx-auto d-block" style="height:80px;" alt="...">
+            <div id="partialView_RetornarPrecoDia" class="card-body">
+                <h5 class="card-title">Preço do dia</h5>
+                @await Html.PartialAsync("_PartialRetornarPrecoDia")
             </div>
         </div>
     </div>
@@ -33,11 +46,9 @@
 
     <div class="col-md-4">
         <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
+            <img src="assets/carro-garagem.png" class="rounded mx-auto d-block" style="height:80px;" alt="...">
+            <div id="partialView_RetornarVagas" class="card-body">
                 <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
 
@@ -59,18 +70,14 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h3>Preço atual:</h3>
-        <p>Moto:</p>
-        <p>Carro médio:</p>
-        <p>Carro grande</p>
-
+    <div class="col-md-4" id="partialView_RetornarPrecoDia">
+        @*@await Html.PartialAsync("_PartialRetornarPrecoDia")*@
     </div>
 
     <div class="col-md-4">
-        <h3>Total de vagas:</h3>
-        <p>Vagas ocupadas:</p>
-        <p>Vagas Disponiveis:</p>
+        @*<div class="col-md-4" id="partialView_RetornarVagas">
+            @await Html.PartialAsync("_PartialRetornarVagas")
+        </div>*@
     </div>
 
     <div class="col-md-4">

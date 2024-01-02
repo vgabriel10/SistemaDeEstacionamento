@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaDeEstacionamento.Models.DTO;
+using System.Linq;
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
@@ -10,6 +11,20 @@ namespace SistemaDeEstacionamento.Models.DAO
         public EstacionamentoDAO(BaseEstacionamentoContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public Vaga informacoesSobreVagas()
+        {
+            //return _dbContext.Vaga.FirstOrDefault();
+            Vaga infoVaga = _dbContext.Vaga.FirstOrDefault();
+            if (infoVaga != null)
+            {
+                infoVaga.VagasOcupadas = _dbContext.Veiculo.Where(v => v.HoraSaida == null).ToList().Count;
+                infoVaga.VagasDisponiveis = infoVaga.TotalVagas - infoVaga.VagasOcupadas;
+            }
+            return infoVaga;
+
+
         }
 
         public void RegistrarEntradaVeiculo(VeiculosNoEstacionamentoDTO dadosVeiculo)
