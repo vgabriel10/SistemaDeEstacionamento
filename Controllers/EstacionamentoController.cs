@@ -97,6 +97,12 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialRetornarVagas", infoVagas);
         }
 
+        public IActionResult PartialLembretes()
+        {
+            List<Lembrete> lembretes = _estacionamentoService.RetornarLembretes();
+            return PartialView("_PartialLembretes", lembretes);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

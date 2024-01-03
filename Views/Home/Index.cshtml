@@ -21,6 +21,7 @@
         $('#partialView_ListarVeiculos').load(`/Estacionamento/PartialListarVeiculos`);
         $('#partialView_RetornarPrecoDia').load(`/Faturamento/PartialRetornarPrecoDia?dia=${dia}`);
         $('#partialView_RetornarVagas').load(`/Estacionamento/PartialRetornarVagas`);
+        $('#partialView_Lembretes').load(`/Estacionamento/PartialLembretes`);
     });
 
 
@@ -34,7 +35,7 @@
 
 <div class="row" style="margin-top:30px;">
     <div class="col-md-4">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem; height: 17rem;">
             <img src="assets/dinheiro-png.png" class="rounded mx-auto d-block" style="height:80px;" alt="...">
             <div id="partialView_RetornarPrecoDia" class="card-body">
                 <h5 class="card-title" style="text-align:center;">Preço do dia</h5>
@@ -45,7 +46,7 @@
 
 
     <div class="col-md-4">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;height: 17rem;">
             <img src="assets/carro-garagem.png" class="rounded mx-auto d-block" style="height:80px;" alt="...">
             <div id="partialView_RetornarVagas" class="card-body">
                 <h5 class="card-title">Card title</h5>
@@ -57,9 +58,9 @@
 
 
     <div class="col-md-4">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;height: 17rem;">
             <img src="assets/lista-lembretes.png" class="rounded mx-auto d-block" style="height:80px;" alt="...">
-            <div class="card-body">
+            <div id="partialView_Lembretes" class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <a href="#" class="btn btn-primary">Go somewhere</a>

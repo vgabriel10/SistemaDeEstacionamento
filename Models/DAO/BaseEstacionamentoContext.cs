@@ -61,5 +61,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         public DbSet<ClienteVeiculoValor> ClienteVeiculoValor { get; set; }
         public DbSet<TipoDia> TipoDia { get; set; }
         public DbSet<Vaga> Vaga { get; set; }
+        public DbSet<Lembrete> Lembrete { get; set; }
     }
 }

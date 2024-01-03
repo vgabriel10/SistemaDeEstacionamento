@@ -16,5 +16,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         public Cliente RetornarClientePorCpf(string cpf);
         public int RetornarIdDiaPeloNome(string dia);
         public Vaga informacoesSobreVagas();
+        public List<Lembrete> RetornarLembretes();
     }
 }

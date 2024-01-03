@@ -48,6 +48,11 @@ namespace SistemaDeEstacionamento.Models.DAO
             return _estacionamentoDAO.RetornarIdDiaPeloNome(dia);
         }
 
+        public List<Lembrete> RetornarLembretes()
+        {
+            return _estacionamentoDAO.RetornarLembretes();
+        }
+
         public List<DadosEntradaSaidaVeiculoDTO> RetornarUltimos50Veiculos()
         {
             return _estacionamentoDAO.RetornarUltimos50Veiculos();

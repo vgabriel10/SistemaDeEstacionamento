@@ -71,6 +71,11 @@ namespace SistemaDeEstacionamento.Models.DAO
                 .FirstOrDefault();
         }
 
+        public List<Lembrete> RetornarLembretes()
+        {
+            return _dbContext.Lembrete.ToList();
+        }
+
         public List<DadosEntradaSaidaVeiculoDTO> RetornarUltimos50Veiculos()
         {
             var listaVeiculos = (from v in _dbContext.Veiculo

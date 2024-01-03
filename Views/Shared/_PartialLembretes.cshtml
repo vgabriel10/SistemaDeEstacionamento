@@ -1,0 +1,60 @@
+﻿@model List<Lembrete>
+
+<h1>@ViewData["Title"]</h1>
+
+<script>
+
+
+</script>
+
+
+<ul>
+    @{
+        if (Model != null)
+        {
+            <span>@Model.Count Lembretes</span>
+            foreach(Lembrete item in Model)
+            {  
+                <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="@item.Id" aria-label="...">
+                    @item.Descricao
+                </li>
+            }
+            <li class="list-group-item">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="mdo">Visualizar todos</button>
+            </li>
+            
+        }
+        else
+        {
+            <p>Você ainda não adicionou nenhum lembrete!</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="mdo">Adicionar lembrete</button>
+        }
+    }
+</ul>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar preço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Total de Vagas:</label>
+                        <input class="form-control" id="txtPreco" type="number" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="">Concluir</button>
+                <button id="btnFecharModal" type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
