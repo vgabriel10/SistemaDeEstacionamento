@@ -16,5 +16,6 @@ namespace SistemaDeEstacionamento.Service
         public RegistrarSaidaDTO CalcularValorPorHora(RegistrarSaidaDTO dadosVeiculoSaida);
         public void RegistrarPagamentoPorHoraEstacionada(RegistrarSaidaDTO dadosVeiculoSaida);
         public void RegistrarPagamentoAvulso(RegistrarSaidaDTO dadosVeiculoSaida);
+        public List<TipoPagamento> RetornarFormasPagamento();
     }
 }

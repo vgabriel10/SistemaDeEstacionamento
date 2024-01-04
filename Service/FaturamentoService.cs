@@ -110,5 +110,10 @@ namespace SistemaDeEstacionamento.Models.DAO
             dadosVeiculoSaida.TempoEstacionado = tempoEstacionado.ToString();
             _faturamentoDAO.RegistrarPagamentoAvulso(dadosVeiculoSaida);
         }
+
+        public List<TipoPagamento> RetornarFormasPagamento()
+        {
+            return _faturamentoDAO.RetornarFormasPagamento();
+        }
     }
 }

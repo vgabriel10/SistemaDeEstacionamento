@@ -14,5 +14,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         //public float CalcularValorPorHora(int tipoVeiculo, int tipoDia, DateTime horaEntrada, DateTime horaSaida, int desconto = 0);
         public void RegistrarPagamentoPorHoraEstacionada(RegistrarSaidaDTO dadosVeiculoSaida);
         public void RegistrarPagamentoAvulso(RegistrarSaidaDTO dadosVeiculoSaida);
+        public List<TipoPagamento> RetornarFormasPagamento();
     }
 }

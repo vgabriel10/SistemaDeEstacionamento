@@ -52,6 +52,14 @@ namespace SistemaDeEstacionamento.Models.DAO
                 new ValorVeiculo { Id = 15, IdDia = 7, IdTipoVeiculo = 2, ValorHora = 10 },
                 new ValorVeiculo { Id = 16, IdDia = 8, IdTipoVeiculo = 2, ValorHora = 10 }
             );
+
+            modelBuilder.Entity<TipoPagamento>().HasData(
+                new TipoPagamento { Id = 1, FormaPagamento = "Dinheiro" },
+                new TipoPagamento { Id = 2, FormaPagamento = "Pix" },
+                new TipoPagamento { Id = 3, FormaPagamento = "Cartão de débito" },
+                new TipoPagamento { Id = 4, FormaPagamento = "Cartão de crédito" },
+                new TipoPagamento { Id = 5, FormaPagamento = "Boleto" }
+            );
         }
 
         public DbSet<Cliente> Cliente { get; set; }
@@ -62,5 +70,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         public DbSet<TipoDia> TipoDia { get; set; }
         public DbSet<Vaga> Vaga { get; set; }
         public DbSet<Lembrete> Lembrete { get; set; }
+        public DbSet<TipoPagamento> TipoPagamento { get; set; }
     }
 }

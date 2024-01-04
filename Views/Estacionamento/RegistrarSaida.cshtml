@@ -2,6 +2,7 @@
     ViewData["Title"] = "Registrar Saída";
     Veiculo veiculo = ViewBag.Veiculo;
     Cliente cliente = ViewBag.Cliente;
+    List<TipoPagamento> tiposPagamentos = ViewBag.TiposPagamentos;
 }
 
 <script>
@@ -179,7 +180,13 @@
         <div class="form-group col-md-6">
             <label for="inputPassword4">Tipo de pagamento:</label>
             <select name="tipoPagamento" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
-                <option selected>Escolha uma opção</option>
+                <option selected value=0>Escolha uma opção</option>
+                @{
+                    foreach (TipoPagamento item in tiposPagamentos)
+                    {
+                        <option value=@item.Id>@item.FormaPagamento</option>
+                    }
+                 }
             </select>
         </div>
         <div class="form-group col-md-6">

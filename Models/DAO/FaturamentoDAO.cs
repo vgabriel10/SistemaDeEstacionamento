@@ -104,5 +104,10 @@ namespace SistemaDeEstacionamento.Models.DAO
                 .Select(vv => vv.ValorHora).FirstOrDefault();
             return valor;
         }
+
+        public List<TipoPagamento> RetornarFormasPagamento()
+        {
+            return _dbContext.TipoPagamento.ToList();
+        }
     }
 }

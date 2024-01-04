@@ -59,8 +59,10 @@ namespace SistemaDeEstacionamento.Controllers
         {
             Veiculo veiculo = _estacionamentoService.RetornarVeiculoPorId(idVeiculo);
             Cliente cliente = _estacionamentoService.RetornarClientePorId(idCliente);
+            List<TipoPagamento> formasDePagamento = _faturamentoService.RetornarFormasPagamento();
             ViewBag.Veiculo = veiculo;
             ViewBag.Cliente = cliente;
+            ViewBag.TiposPagamentos = formasDePagamento;
             //Response.Redirect("/Home/RegistrarSaida");
             return View();
         }

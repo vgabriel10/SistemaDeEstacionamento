@@ -41,7 +41,6 @@ namespace SistemaDeEstacionamento.Controllers
         //    return View();
         //}
 
-
         public IActionResult AlterarPreco()
         {
             var listaDias = _estacionamentoService.RetornaTiposDias();

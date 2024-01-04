@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeEstacionamento.Models.DAO;
 
@@ -11,9 +12,11 @@ using SistemaDeEstacionamento.Models.DAO;
 namespace SistemaDeEstacionamento.Migrations
 {
     [DbContext(typeof(BaseEstacionamentoContext))]
-    partial class BaseEstacionamentoContextModelSnapshot : ModelSnapshot
+    [Migration("20240103231122_tipo-pagamento")]
+    partial class tipopagamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,33 +188,6 @@ namespace SistemaDeEstacionamento.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TiposPagamentos");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FormaPagamento = "Dinheiro"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FormaPagamento = "Pix"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FormaPagamento = "Cartão de débito"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FormaPagamento = "Cartão de crédito"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FormaPagamento = "Boleto"
-                        });
                 });
 
             modelBuilder.Entity("SistemaDeEstacionamento.Models.TipoVeiculo", b =>
