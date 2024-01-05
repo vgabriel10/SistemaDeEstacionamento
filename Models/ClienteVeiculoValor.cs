@@ -19,6 +19,9 @@ namespace SistemaDeEstacionamento.Models
         public virtual Veiculo Veiculo { get; set; }
         public DateTime DataDePagamento { get; set; }
         public string TempoEstacionado { get; set; }
+        [ForeignKey("TipoPagamento")]
+        public int? IdTipoPagamento { get; set; }
+        public virtual TipoPagamento TipoPagamento { get; set; }
         public decimal ValorBruto { get; set; }
         public decimal ValorTotal { get; set; }
     }
