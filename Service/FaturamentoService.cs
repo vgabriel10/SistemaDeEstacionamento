@@ -115,5 +115,10 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
             return _faturamentoDAO.RetornarFormasPagamento();
         }
+
+        public List<ClienteVeiculoValor> RetornarEntradaDeValoresPeloDia(DateTime diaAtual)
+        {
+            return _faturamentoDAO.RetornarEntradaDeValoresPeloDia(diaAtual);
+        }
     }
 }

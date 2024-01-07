@@ -1,0 +1,101 @@
+﻿@model List<ClienteVeiculoValor>
+
+<script>
+
+    $(function () {
+        CarregarTabela('tableEntradasDeValores');
+    });
+
+</script>
+
+<h3>Entradas no dia</h3>
+@*<table id="tableEntradasDeValores" class="table table-success">
+    <tr>
+        <td>Valor</td>
+        <td>Tipo de Pagamento</td>
+        <td>Data de Pagamento</td>
+        <td>Alterar</td>
+        <td>Excluir</td>
+    </tr>
+
+    @{
+        if (Model != null && Model.Count > 0)
+        {
+            foreach (ClienteVeiculoValor item in Model)
+            {
+                <tr>
+                    <td>@item.ValorTotal</td>
+                    <td>@item.TipoPagamento.FormaPagamento</td>
+                    <td>@item.DataDePagamento</td>
+                    <td><a href="#" class="btn btn-primary"> Alterar </a></td>
+                    <td><a href="#" class="btn btn-danger"> Excluir </a></td>
+                </tr>
+            }
+        }
+    }
+</table>*@
+
+<table id="tableEntradasDeValores" class="table table-success">
+    <thead>
+        <tr>
+            <td>Valor</td>
+            <td>Tipo de Pagamento</td>
+            <td>Data de Pagamento</td>
+            <td>Alterar</td>
+            <td>Excluir</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model != null && Model.Count > 0)
+            {
+                foreach (ClienteVeiculoValor item in Model)
+                {
+                    <tr>
+                        <td>@item.ValorTotal</td>
+                        <td>@item.TipoPagamento.FormaPagamento</td>
+                        <td>@item.DataDePagamento</td>
+                        <td><a href="#" class="btn btn-primary"> Alterar </a></td>
+                        <td><a href="#" class="btn btn-danger"> Excluir </a></td>
+                    </tr>
+                }
+            }
+        }
+    <tbody>
+
+</table>
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar preço</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div style="visibility: collapse;">
+                        <input id="lblIdTipoVeiculo" style="font-family:Arial" for="recipient-name" class="col-form-label" />
+                    </div>
+                    <div class="mb-3">
+
+                        <label id="lblTipoVeiculo" style="font-family:Arial; font-size:16px;" for="recipient-name" class="col-form-label"></label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Preço:</label>
+                        <input class="form-control" id="txtPreco" type="number" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btnFecharModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="AlterarPreco()">Alterar preço</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

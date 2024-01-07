@@ -84,7 +84,17 @@ namespace SistemaDeEstacionamento.Controllers
 
         public IActionResult Faturamento()
         {
+            var entradasNoDia = _faturamentoService.RetornarEntradaDeValoresPeloDia(DateTime.Now);
+
             return View();
+        }
+
+        public IActionResult PartialRetornarEntradasValores(DateTime? data)
+        {
+            if (data == null)
+                data = DateTime.Now;
+            var entradasNoDia = _faturamentoService.RetornarEntradaDeValoresPeloDia((DateTime)data);
+            return PartialView("_PartialRetornarEntradasValores", entradasNoDia);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

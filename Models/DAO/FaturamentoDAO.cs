@@ -64,6 +64,7 @@ namespace SistemaDeEstacionamento.Models.DAO
                 IdTipoVeiculo = dadosVeiculoSaida.TipoVeiculo,
                 TempoEstacionado = dadosVeiculoSaida.TempoEstacionado,
                 DataDePagamento = DateTime.Now,
+                IdTipoPagamento = dadosVeiculoSaida.TipoPagamento,
                 ValorBruto = dadosVeiculoSaida.ValorBruto,
                 ValorTotal = dadosVeiculoSaida.ValorTotal  
             });
@@ -79,6 +80,7 @@ namespace SistemaDeEstacionamento.Models.DAO
                 IdTipoVeiculo = dadosVeiculoSaida.TipoVeiculo,
                 TempoEstacionado = dadosVeiculoSaida.TempoEstacionado,
                 DataDePagamento = DateTime.Now,
+                IdTipoPagamento = dadosVeiculoSaida.TipoPagamento,
                 ValorBruto = dadosVeiculoSaida.ValorAvulso,
                 ValorTotal = dadosVeiculoSaida.ValorAvulso
             });
@@ -108,6 +110,12 @@ namespace SistemaDeEstacionamento.Models.DAO
         public List<TipoPagamento> RetornarFormasPagamento()
         {
             return _dbContext.TipoPagamento.ToList();
+        }
+
+        public List<ClienteVeiculoValor> RetornarEntradaDeValoresPeloDia(DateTime diaAtual)
+        {
+            List<ClienteVeiculoValor> entradasNoDia = _dbContext.ClienteVeiculoValor.Where(x => x.DataDePagamento.Date == diaAtual.Date).ToList();
+            return entradasNoDia;
         }
     }
 }

@@ -1,23 +1,21 @@
 ﻿@{
     ViewData["Title"] = "Faturamento";
 }
+
+<script>
+    $(function () {
+        //$('#partialView_RetornarPrecoDia').load(`/Faturamento/PartialRetornarPrecoDia?dia=${dia}`);
+        $('#partialView_RetornarEntradasValores').load(`/Faturamento/PartialRetornarEntradasValores`);
+    });
+</script>
+
+
 <h1>@ViewData["Title"]</h1>
 
 
 <div class="row">
-    <div class="col-md-6">
-        <table class="table table-success">
-            <tr>
-                <td>Entradas no dia</td>
-                <td>Alterar</td>
-                <td>Excluir</td>
-            </tr>
-            <tr>
-                <td>15 R$</td>
-                <td><a href="" class="btn btn-primary"> Alterar </a></td>
-                <td><a href="" class="btn btn-danger"> Excluir </a></td>
-            </tr>
-        </table>
+    <div id="partialView_RetornarEntradasValores" class="col-md-6">
+        @await Html.PartialAsync("_PartialRetornarEntradasValores")
     </div>
 
     <div class="col-md-6">
