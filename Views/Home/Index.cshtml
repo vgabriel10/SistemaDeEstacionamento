@@ -5,7 +5,7 @@
     DateTime data = new DateTime();
     data = DateTime.Now;
     string diaDaSemana = culturaBrasileira.DateTimeFormat.GetDayName(data.DayOfWeek);
-    int idData = (int)data.DayOfWeek;
+    int idData = (int)data.DayOfWeek + 1;
 }
 
 @*<div class="text-center">
