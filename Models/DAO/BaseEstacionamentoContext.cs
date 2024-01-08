@@ -71,5 +71,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         public DbSet<Vaga> Vaga { get; set; }
         public DbSet<Lembrete> Lembrete { get; set; }
         public DbSet<TipoPagamento> TipoPagamento { get; set; }
+        public DbSet<Despesa> Despesa { get; set; }
     }
 }
