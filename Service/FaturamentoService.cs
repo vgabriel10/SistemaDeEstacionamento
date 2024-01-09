@@ -120,5 +120,10 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
             return _faturamentoDAO.RetornarEntradaDeValoresPeloDia(diaAtual);
         }
+
+        public List<Despesa> RetornarSaidaDeValoresPeloDia(DateTime diaAtual)
+        {
+            return _faturamentoDAO.RetornarSaidaDeValoresPeloDia(diaAtual);
+        }
     }
 }

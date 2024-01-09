@@ -117,5 +117,11 @@ namespace SistemaDeEstacionamento.Models.DAO
             List<ClienteVeiculoValor> entradasNoDia = _dbContext.ClienteVeiculoValor.Where(x => x.DataDePagamento.Date == diaAtual.Date).ToList();
             return entradasNoDia;
         }
+
+        public List<Despesa> RetornarSaidaDeValoresPeloDia(DateTime diaAtual)
+        {
+            List<Despesa> saidasNoDia = _dbContext.Despesa.Where(x => x.DataDePagamento.Date == diaAtual.Date).ToList();
+            return saidasNoDia;
+        }
     }
 }

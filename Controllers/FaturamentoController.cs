@@ -97,6 +97,14 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialRetornarEntradasValores", entradasNoDia);
         }
 
+        public IActionResult PartialRetornarSaidaValores(DateTime? data)
+        {
+            if (data == null)
+                data = DateTime.Now;
+            var saidasNoDia = _faturamentoService.RetornarSaidaDeValoresPeloDia((DateTime)data);
+            return PartialView("_PartialRetornarSaidasValores", saidasNoDia);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

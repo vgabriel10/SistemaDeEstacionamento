@@ -16,5 +16,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         public void RegistrarPagamentoAvulso(RegistrarSaidaDTO dadosVeiculoSaida);
         public List<TipoPagamento> RetornarFormasPagamento();
         public List<ClienteVeiculoValor> RetornarEntradaDeValoresPeloDia(DateTime diaAtual);
+        public List<Despesa> RetornarSaidaDeValoresPeloDia(DateTime diaAtual);
     }
 }
