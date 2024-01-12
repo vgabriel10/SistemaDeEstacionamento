@@ -4,6 +4,14 @@
     List<TipoVeiculo> tiposVeiculos = ViewBag.TiposVeiculos;
     List<TipoDia> tipoDia = ViewBag.TipoDia;
 }
+
+<script>
+    $(function () {
+        MascaraPlaca('Placa');
+    });
+    
+</script>
+
 <h1>@ViewData["Title"]</h1>
 
 @if (TempData["ok"] != null)
@@ -18,7 +26,7 @@
     <div class="row">
         <div class="form-group col-md-6">
             <label for="inputEmail4">Nome do Cliente Responsável:</label>
-            <input name="NomeCliente" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+            <input name="NomeCliente" type="text" class="form-control" id="inputEmail4" placeholder="Nome" required>
         </div>
         <div class="form-group col-md-6">
             <label for="inputPassword4">CPF:</label>
@@ -46,7 +54,7 @@
     <div class="row">
         <div class="form-group col-md-6">
             <label for="ddlTipoVeiculo">Tipo de veículo:</label>
-            <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+            <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example" required>
                 <option selected>Escolha uma opção</option>
                 @{
                     foreach (var opcao in tiposVeiculos)
@@ -54,14 +62,11 @@
                         <option value=@opcao.Id>@opcao.Nome</option>
                     }
                 }
-                @*<option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>*@
             </select>
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">Dia na semana:</label>
-            <select name="TipoDia" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example">
+            <select name="TipoDia" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example" required>
                 @{
                     DateTime dataAtual = DateTime.Now;
                     // Adiciona mais um pois no banco a enumeração começa com 1
@@ -77,23 +82,23 @@
     <div class="row">
         <div class="form-group col-md-6">
             <label for="inputEmail4">Nome do Veículo:</label>
-            <input name="NomeVeiculo" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+            <input name="NomeVeiculo" type="text" class="form-control" id="inputEmail4" placeholder="Nome" required>
         </div>
         <div class="form-group col-md-6">
-            <label for="inputPassword4">Placa:</label>
-            <input name="Placa" type="text" class="form-control" id="inputPassword4" placeholder="Placa">
+            <label for="Placa">Placa:</label>
+            <input name="Placa" type="text" class="form-control" id="inputPassword4" placeholder="Placa" required>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             <div class="cs-form">
-                <label for="inputPassword4">Hora da Entrada:</label>
-                <input name="HoraEntrada" type="time" class="form-control" value="10:05 AM" />
+                <label for="HoraEntrada">Hora da Entrada:</label>
+                <input name="HoraEntrada" type="time" class="form-control" required />
             </div>
         </div>
         <div class="form-group col-md-6">
             <div class="cs-form">
-                <label for="inputPassword4">Local:</label>
+                <label for="Local">Local:</label>
                 <input name="Local" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
             </div>
         </div>
