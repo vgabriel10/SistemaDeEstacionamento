@@ -8,7 +8,31 @@
 <script>
     $(function () {
         MascaraPlaca('Placa');
+        MascaraTelefone('telefone');
+        MascaraCpf('cpf');
     });
+
+    //function ValidarDados(e){
+    //    if (ValidarCpf($('#cpf').val()) === false) {
+    //        alert('CPF invalido');
+    //        e.preventDefault();
+    //    }
+    //    else if(ValidarPlaca($('#placa').val()){
+    //        alert('Placa invalida');
+    //        e.preventDefault();
+    //    }      
+    //}
+
+    function ValidarDados(e) {
+        if (ValidarCpf($('#cpf').val()) === false) {
+            alert('CPF invalido');
+            e.preventDefault();
+        } 
+        if(ValidarPlaca($('#placa').val()) === false) {
+            alert('Placa invalida');
+            e.preventDefault();
+        }
+    }
     
 </script>
 
@@ -29,8 +53,8 @@
             <input name="NomeCliente" type="text" class="form-control" id="inputEmail4" placeholder="Nome" required>
         </div>
         <div class="form-group col-md-6">
-            <label for="inputPassword4">CPF:</label>
-            <input name="Cpf" type="text" class="form-control" id="inputPassword4" placeholder="000.000.000-00">
+            <label for="Cpf">CPF:</label>
+            <input name="Cpf" type="text" class="form-control" id="cpf" placeholder="000.000.000-00" minlength="11">
         </div>
     </div>
     <div class="row">
@@ -44,7 +68,7 @@
         </div>*@
         <div class="form-group col-md-6">
             <label for="inputEmail4">Telefone:</label>
-            <input name="Telefone" type="text" class="form-control" id="inputEmail4" placeholder="(00)900-0000">
+            <input name="Telefone" type="text" class="form-control" id="telefone" placeholder="(00)9000-0000">
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">Nome do cliente (opcional):</label>
@@ -86,7 +110,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="Placa">Placa:</label>
-            <input name="Placa" type="text" class="form-control" id="inputPassword4" placeholder="Placa" required>
+            <input name="Placa" type="text" class="form-control" id="placa" placeholder="Placa" required minlength="7">
         </div>
     </div>
     <div class="row">
@@ -106,7 +130,7 @@
     <div class="row">
         <div class="form-group col-md-6">
             <div class="cs-form">
-                <button class="btn btn-primary">Salvar</button>
+                <button class="btn btn-primary" onclick="ValidarDados(event);">Salvar</button>
             </div>
         </div>
     </div>

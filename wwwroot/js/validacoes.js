@@ -31,7 +31,7 @@
 // ===========
 
 function MascaraPlaca(name) {
-    $('input[name='+name+']').mask('AAA 0U00', {
+    $('input[name=' + name + ']').mask('AAA 0U00', {
         translation: {
             'A': {
                 pattern: /[A-Za-z]/
@@ -57,4 +57,52 @@ function MascaraPlaca(name) {
         }
     });
 }
-    
+
+
+function MascaraTelefone(id) {
+    jQuery(function ($) {
+        $('#' + id + '').mask('(99) 99999-9999');
+        $('#' + id + '').blur(function (event) {
+            if ($(this).val().length == 15) {
+                $('#maskFone').mask('(99) 99999-9999');
+            } else {
+                $('#maskFone').mask('(99) 9999-99999');
+            }
+        });
+    });
+}
+
+function MascaraCpf(id) {
+    console.log(id);
+    //let $mascaraCpf = '#' + id + '';
+    //console.log(mascaraCpf);
+    //$mascaraCpf.mask('000.000.000-00', { reverse: true });
+
+    //=============
+
+    $('#'+ id +'').mask('000.000.000-00', { reverse: true });
+}
+
+
+function ValidarPlaca(placa) {
+    if (placa.length != 8) {
+        return false;
+    }
+}
+
+
+function ValidarCpf(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+    var result = true;
+    [9, 10].forEach(function (j) {
+        var soma = 0, r;
+        cpf.split(/(?=)/).splice(0, j).forEach(function (e, i) {
+            soma += parseInt(e) * ((j + 2) - (i + 1));
+        });
+        r = soma % 11;
+        r = (r < 2) ? 0 : 11 - r;
+        if (r != cpf.substring(j, j + 1)) result = false;
+    });
+    return result;
+}
