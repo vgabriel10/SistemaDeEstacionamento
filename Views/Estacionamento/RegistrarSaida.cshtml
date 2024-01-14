@@ -58,6 +58,15 @@
     }
 
     function RegistrarSaidaAvulsa(e) {
+
+        if ($("#txtHoraSaida").val() === null || $("#txtHoraSaida").val() === undefined || $("#txtHoraSaida").val() === ''){
+            AlertaErroSemBotao('Informe a hora de saída do veiculo!');
+            return;
+        }
+        if ($("#txtValorTotal").val() === null || $("#txtValorTotal").val() === undefined || $("#txtValorTotal").val() === '')
+            return AlertaErroSemBotao('Informe a hora de saída do veiculo!');
+        
+            
         let obj = {
             IdCliente : $('#txtIdCliente').val(),
             IdVeiculo : $('#txtIdVeiculo').val(),
@@ -83,22 +92,6 @@
         });
         e.preventDefault();
     }
-
-    //$("#txtHoraSaida").focusout(function () {
-    //    alert('Chegueiiii');
-    //    $.ajax({
-    //        url: '/Home/CalcularValorPorHora',
-    //        type: 'POST',
-    //        data: {}
-    //        success: function (response) {
-    //            console.log('Resposta do servidor:', response);
-    //            alert('Deu certo!');
-    //        },
-    //        error: function (error) {
-    //            console.error('Erro na solicitação:', error);
-    //        }
-    //    })
-    //});
 
 </script>
 
@@ -136,11 +129,11 @@
 
         <div class="form-group col-md-6">
             <label for="inputEmail4">Telefone:</label>
-            <input name="Telefone" type="text" class="form-control" id="inputEmail4" placeholder="(00)90000-0000">
+            <input name="Telefone" type="text" class="form-control" id="inputEmail4" placeholder="(00)90000-0000" readonly>
         </div>
         <div class="form-group col-md-6">
             <label for="inputEmail4">Nome do cliente (opcional):</label>
-            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome">
+            <input name="NomeCliente2" type="text" class="form-control" id="inputEmail4" placeholder="Nome" readonly>
         </div>
     </div>
     <div class="row">
@@ -172,7 +165,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="HoraSaida">Hora da Saída:</label>
-            <input id="txtHoraSaida" name="HoraSaida" type="time" class="form-control" onblur="CalcularValor()" />
+            <input id="txtHoraSaida" name="HoraSaida" type="time" class="form-control" onblur="CalcularValor()" required />
         </div>
     </div>
 
@@ -202,33 +195,9 @@
         </div>
         <div class="form-group col-md-6">
             <label for="inputPassword4">Valor total:</label>
-            <input id="txtValorTotal" name="valorTotal" type="number" class="form-control" placeholder="R$" readonly />
+            <input id="txtValorTotal" name="valorTotal" type="number" class="form-control" placeholder="R$" readonly required />
         </div>
     </div>
-
-    @*   <div class="row" style="margin-top:30px;">
-    <div id="divRegSaida" class="form-group col-md-3">
-    <div class="cs-form">
-    <button id="btnRegSaida" class="btn btn-primary">Registrar Saída por hora estacionada</button>
-    </div>
-    </div>
-    <div id="divRegSaidaAvulsa" class="form-group col-md-3" style="visibility: hidden;">
-    <div class="cs-form">
-    <button id="btnRegSaidaAvulsa" class="btn btn-secondary" onclick="RegistrarSaidaAvulso(event)">Registrar Saída Avulsa</button>
-    </div>
-    </div>
-    <div class="form-group col-md-3">
-    <div class="cs-form">
-    <button id="btnEditar" class="btn btn-secondary" onclick="Editar(event)">Editar Valores</button>
-    </div>
-    </div>
-    <div class="form-group col-md-3">
-    <div class="cs-form">
-    <button id="btnVoltar" class="btn btn-secondary" onclick="RecarregarPagina(event);">Voltar</button>
-    </div>
-    </div>
-
-    </div>*@
 
     <div style="margin-top:30px;" class="btn-group" role="group">
         <button id="btnRegSaida" class="btn btn-primary">Registrar Saída por hora estacionada</button>

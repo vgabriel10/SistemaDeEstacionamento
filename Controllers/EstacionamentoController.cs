@@ -41,7 +41,7 @@ namespace SistemaDeEstacionamento.Controllers
         public VeiculosNoEstacionamentoDTO RegistrarEntradaVeiculo(VeiculosNoEstacionamentoDTO veiculo)
         {
             _estacionamentoService.RegistrarEntradaVeiculo(veiculo);
-            TempData["ok"] = "Tarefa criada com sucesso!";
+            TempData["ok"] = "Veiculo inserido com sucesso!";
             Response.Redirect("/Estacionamento/AdicionarEntradaVeiculo");
             return null;
         }
