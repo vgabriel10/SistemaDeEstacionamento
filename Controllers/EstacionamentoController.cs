@@ -41,7 +41,7 @@ namespace SistemaDeEstacionamento.Controllers
         public VeiculosNoEstacionamentoDTO RegistrarEntradaVeiculo(VeiculosNoEstacionamentoDTO veiculo)
         {
             _estacionamentoService.RegistrarEntradaVeiculo(veiculo);
-            TempData["ok"] = "Veiculo inserido com sucesso!";
+            TempData["ok"] = "Veículo inserido com sucesso!";
             Response.Redirect("/Estacionamento/AdicionarEntradaVeiculo");
             return null;
         }
@@ -76,12 +76,16 @@ namespace SistemaDeEstacionamento.Controllers
         {
             _estacionamentoService.RegistrarSaidaVeiculo(dadosVeiculoSaida.IdVeiculo, dadosVeiculoSaida.HoraSaida);
             _faturamentoService.RegistrarPagamentoPorHoraEstacionada(dadosVeiculoSaida);
+            TempData["alerta"] = "Saída registrada com sucesso!";
+            Response.Redirect("/Estacionamento/ListarVeiculos");
         }
 
         public void RegistrarSaidaAvulsaVeiculo(RegistrarSaidaDTO dadosVeiculoSaida)
         {
             _estacionamentoService.RegistrarSaidaVeiculo(dadosVeiculoSaida.IdVeiculo, dadosVeiculoSaida.HoraSaida);
             _faturamentoService.RegistrarPagamentoAvulso(dadosVeiculoSaida);
+            TempData["alerta"] = "Saída registrada com sucesso!";
+            Response.Redirect("/Estacionamento/ListarVeiculos");
         }
 
         public IActionResult PartialListarVeiculos()

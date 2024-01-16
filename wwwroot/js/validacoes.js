@@ -106,3 +106,13 @@ function ValidarCpf(cpf) {
     });
     return result;
 }
+
+
+function VerificarHoraValida(hora) {
+    console.log(hora);
+}
+
+function ValidarDropDownList(valor) {
+    if (valor === 0 || valor === null || valor === '0' || valor === '' || valor === undefined)
+        return false;
+}

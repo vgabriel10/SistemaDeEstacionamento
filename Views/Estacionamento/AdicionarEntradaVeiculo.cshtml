@@ -12,27 +12,18 @@
         MascaraCpf('cpf');
     });
 
-    //function ValidarDados(e){
-    //    if (ValidarCpf($('#cpf').val()) === false) {
-    //        alert('CPF invalido');
-    //        e.preventDefault();
-    //    }
-    //    else if(ValidarPlaca($('#placa').val()){
-    //        alert('Placa invalida');
-    //        e.preventDefault();
-    //    }      
-    //}
-
     function ValidarDados(e) {
         if (ValidarCpf($('#cpf').val()) === false) {
-            AlertaErroSemBotao('Cpf Inválido!');
             e.preventDefault();
-            return;
+            return AlertaErroSemBotao('Cpf Inválido!');           
         } 
         if(ValidarPlaca($('#placa').val()) === false) {
-            AlertaErroSemBotao('Placa Inválida!');
             e.preventDefault();
-            return;
+            return AlertaErroSemBotao('Placa Inválida!');           
+        }
+        if (ValidarDropDownList($('#ddlTipoVeiculo').val()) === false) {
+            e.preventDefault();
+            return AlertaErroSemBotao('Informe o tipo de veículo!');
         }
         
     }
@@ -43,9 +34,6 @@
 
 @if (TempData["ok"] != null)
 {
-    @*<div class="alert alert-success" role="alert">
-        Entrada de veículo registrada com sucesso!
-    </div>*@
     <script>
         AlertaSucessoComBotao('@TempData["ok"]');
     </script>
@@ -86,7 +74,7 @@
         <div class="form-group col-md-6">
             <label for="ddlTipoVeiculo">Tipo de veículo:</label>
             <select name="TipoVeiculo" id="ddlTipoVeiculo" class="form-select" aria-label="Default select example" required>
-                <option selected>Escolha uma opção</option>
+                <option value = 0 selected>Escolha uma opção</option>
                 @{
                     foreach (var opcao in tiposVeiculos)
                     {

@@ -20,7 +20,6 @@
            data: { idVeiculo: idVeiculo, idCliente: idCliente },
             success: function (response) {
                 console.log('Resposta do servidor:', response);
-                alert('Deu certo!');
                 window.location.href = 'RegistrarSaida';
             },
             error: function (error) {
@@ -30,6 +29,15 @@
     }
 
 </script>
+
+
+@if (TempData["alerta"] != null)
+{
+    <script>
+        AlertaSucessoComBotao('@TempData["alerta"]');
+    </script>
+
+}
 
 
 <table id="tableListarVeiculos" class="table table-dark table-striped">

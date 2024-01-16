@@ -8,6 +8,10 @@
 <script>
 
     function CalcularValor() {
+        if ($("#txtHoraSaida").val() === null || $("#txtHoraSaida").val() === undefined || $("#txtHoraSaida").val() === '') {
+            AlertaAvisoSemBotao('A hora de saída informada é invalida!');
+            return;
+        }
         let formData = {
             TipoVeiculo: $("#txtTipoVeiculo").val(),
             TipoDia: $("#txtTipoDia").val(),
@@ -24,7 +28,6 @@
                 console.log('Resposta do servidor:', response);
                 $('#txtValorBruto').val(response.valorBruto);
                 $('#txtValorTotal').val(response.valorTotal);
-                alert('Deu certo!');
             },
             error: function (error) {
                 console.error('Erro na solicitação:', error);
@@ -58,14 +61,13 @@
     }
 
     function RegistrarSaidaAvulsa(e) {
-
-        if ($("#txtHoraSaida").val() === null || $("#txtHoraSaida").val() === undefined || $("#txtHoraSaida").val() === ''){
-            AlertaErroSemBotao('Informe a hora de saída do veiculo!');
-            return;
-        }
-        if ($("#txtValorTotal").val() === null || $("#txtValorTotal").val() === undefined || $("#txtValorTotal").val() === '')
+        e.preventDefault();
+        if ($("#txtHoraSaida").val() === null || $("#txtHoraSaida").val() === undefined || $("#txtHoraSaida").val() === '')
             return AlertaErroSemBotao('Informe a hora de saída do veiculo!');
-        
+        if ($("#txtValorTotal").val() === null || $("#txtValorTotal").val() === undefined || $("#txtValorTotal").val() === '')
+            return AlertaErroSemBotao('Informe a valor a ser pago!');
+        if (ValidarDropDownList($('#ddlTipoVeiculo').val()) === false) 
+            return AlertaErroSemBotao('Informe o tipo de pagamento!');                
             
         let obj = {
             IdCliente : $('#txtIdCliente').val(),
@@ -76,6 +78,7 @@
             HoraEntrada: $("#txtHoraEntrada").val(),
             HoraSaida: $("#txtHoraSaida").val(),
             ValorAvulso: $("#txtValorTotal").val(),
+            TipoPagamento: $("#ddlTipoVeiculo").val(),
         };
         
         $.ajax({
@@ -84,13 +87,28 @@
             data: obj,
             success: function (response) {
                 console.log('Resposta do servidor:', response);
-                alert('Deu certo!');
             },
             error: function (error) {
                 console.error('Erro na solicitação:', error);
             }
-        });
-        e.preventDefault();
+        });  
+    }
+
+    function ValidarSaidaPorHoraEstacionada(e){
+        if ($("#txtHoraSaida").val() === null || $("#txtHoraSaida").val() === undefined || $("#txtHoraSaida").val() === ''){
+            e.preventDefault();
+            return AlertaErroSemBotao('Informe a hora de saída do veiculo!');
+        }
+            
+        if ($("#txtValorTotal").val() === null || $("#txtValorTotal").val() === undefined || $("#txtValorTotal").val() === ''){
+            e.preventDefault();
+            return AlertaErroSemBotao('Informe a valor a ser pago!');
+        }
+            
+        if (ValidarDropDownList($('#ddlTipoVeiculo').val()) === false){
+            e.preventDefault();
+            return AlertaErroSemBotao('Informe o tipo de pagamento!');
+        }      
     }
 
 </script>
@@ -200,7 +218,7 @@
     </div>
 
     <div style="margin-top:30px;" class="btn-group" role="group">
-        <button id="btnRegSaida" class="btn btn-primary">Registrar Saída por hora estacionada</button>
+        <button id="btnRegSaida" class="btn btn-primary" onclick="ValidarSaidaPorHoraEstacionada(event);">Registrar Saída por hora estacionada</button>
         <button id="btnRegSaidaAvulsa" class="btn btn-secondary" onclick="RegistrarSaidaAvulsa(event)" style="margin-left:10px;visibility: hidden;">Registrar Saída Avulsa</button>
         <button id="btnEditar" class="btn btn-secondary" onclick="Editar(event)" style="margin-left:10px;">Editar Valores</button>
         <button id="btnVoltar" class="btn btn-secondary" onclick="RecarregarPagina(event);" style="margin-left:10px; visibility: hidden;">Voltar</button>
