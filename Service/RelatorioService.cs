@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SistemaDeEstacionamento.Models.DTO;
 using SistemaDeEstacionamento.Service;
 using System.Diagnostics;
+using SistemaDeEstacionamento.Enums;
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
@@ -24,6 +25,12 @@ namespace SistemaDeEstacionamento.Models.DAO
         public string RetornarCaminhoArquivo(string nomeArquivo)
         {
             string caminho = Path.Combine(_hostingEnvironment.ContentRootPath, "Arquivos", nomeArquivo);
+            return caminho;
+        }
+
+        public string RetornarCaminhoImagens(string nomeImagem)
+        {
+            string caminho = Path.Combine(_hostingEnvironment.ContentRootPath, "wwwroot", "assets", nomeImagem);
             return caminho;
         }
 
@@ -55,12 +62,30 @@ namespace SistemaDeEstacionamento.Models.DAO
             var fonteBase = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, false);
 
             //adiciona um título
-            var fonteParagrafo = new iTextSharp.text.Font(fonteBase, 32,
+            var fonteParagrafo = new iTextSharp.text.Font(fonteBase, 26,
                 iTextSharp.text.Font.NORMAL, BaseColor.Black);
-            var titulo = new Paragraph("Relatório de Pessoas\n\n", fonteParagrafo);
+            var titulo = new Paragraph("Relatório de Entrada e Saída de Valores\n\n", fonteParagrafo);
             titulo.Alignment = Element.ALIGN_LEFT;
             titulo.SpacingAfter = 4;
             pdf.Add(titulo);
+
+
+            //adiciona uma imagem
+            var caminhoImagem = RetornarCaminhoImagens("dinheiro-png.png");
+            if (File.Exists(caminhoImagem))
+            {
+                iTextSharp.text.Image logo =
+                    iTextSharp.text.Image.GetInstance(caminhoImagem);
+                float razaoLarguraAltura = logo.Width / logo.Height;
+                float alturaLogo = 32;
+                float larguraLogo = alturaLogo * razaoLarguraAltura;
+                logo.ScaleToFit(larguraLogo, alturaLogo);
+                var margemEsquerda = pdf.PageSize.Width - pdf.RightMargin - larguraLogo;
+                var margemTopo = pdf.PageSize.Height - pdf.TopMargin - 54;
+                logo.SetAbsolutePosition(margemEsquerda, margemTopo);
+                writer.DirectContent.AddImage(logo, false);
+            }
+
 
             //adiciona uma tabela
             var tabela = new PdfPTable(4);
@@ -71,7 +96,7 @@ namespace SistemaDeEstacionamento.Models.DAO
 
             //adiciona os títulos das colunas
             CriarCelulaTexto(tabela, "Tipo", PdfPCell.ALIGN_CENTER, true);
-            CriarCelulaTexto(tabela, "Data", PdfPCell.ALIGN_LEFT, true);
+            CriarCelulaTexto(tabela, "Data", PdfPCell.ALIGN_CENTER, true);
             CriarCelulaTexto(tabela, "Forma de Pagamento", PdfPCell.ALIGN_CENTER, true);
             CriarCelulaTexto(tabela, "Valor", PdfPCell.ALIGN_CENTER, true);
 
@@ -91,12 +116,40 @@ namespace SistemaDeEstacionamento.Models.DAO
             new RelatorioEntradaSaidaValorDTO { Tipo = "Compra", DataPagamento = DateTime.Now.AddDays(-9), FormaPagamento = "Boleto", Valor = 110.90m }
         };
 
+            //foreach (var item in dadosRelatorio)
+            //{
+            //    CriarCelulaTexto(tabela, item.Tipo, PdfPCell.ALIGN_CENTER);
+            //    CriarCelulaTexto(tabela, item.DataPagamento.ToString(), PdfPCell.ALIGN_CENTER);
+            //    CriarCelulaTexto(tabela, item.FormaPagamento, PdfPCell.ALIGN_CENTER);
+            //    CriarCelulaTexto(tabela, item.Valor.ToString("C2"), PdfPCell.ALIGN_RIGHT);
+
+
+            //    //var caminhoImagemCelula = p.Empregado ?
+            //    //    "img\\emoji_feliz.png" : "img\\emoji_triste.png";
+            //    //caminhoImagemCelula = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+            //    //    caminhoImagemCelula);
+            //    //criarCelulaImagem(tabela, caminhoImagemCelula, 20, 20);
+            //}
+
             foreach (var item in dadosRelatorio)
             {
-                CriarCelulaTexto(tabela, item.Tipo, PdfPCell.ALIGN_CENTER);
-                CriarCelulaTexto(tabela, item.DataPagamento.ToString(), PdfPCell.ALIGN_CENTER);
-                CriarCelulaTexto(tabela, item.FormaPagamento, PdfPCell.ALIGN_CENTER);
-                CriarCelulaTexto(tabela, item.Valor.ToString("C2"), PdfPCell.ALIGN_RIGHT);
+                if (item.Tipo.Equals("Entrada"))
+                {
+                    CriarCelulaTextoCorPersonalizada(tabela, item.Tipo, BaseColor.Green, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.DataPagamento.ToString(), BaseColor.Green, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.FormaPagamento, BaseColor.Green, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.Valor.ToString("C2"), BaseColor.Green, PdfPCell.ALIGN_RIGHT);
+                }
+                else
+                {
+                    CriarCelulaTextoCorPersonalizada(tabela, item.Tipo, BaseColor.Red, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.DataPagamento.ToString(), BaseColor.Red, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.FormaPagamento, BaseColor.Red, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.Valor.ToString("C2"), BaseColor.Red, PdfPCell.ALIGN_RIGHT);
+                }
+                
+
+
                 //var caminhoImagemCelula = p.Empregado ?
                 //    "img\\emoji_feliz.png" : "img\\emoji_triste.png";
                 //caminhoImagemCelula = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
@@ -164,6 +217,81 @@ namespace SistemaDeEstacionamento.Models.DAO
             celula.PaddingBottom = 5; //pra alinhar melhor verticalmente
             celula.FixedHeight = alturaCelula;
             celula.BackgroundColor = bgColor;
+            tabela.AddCell(celula);
+        }
+
+
+        private void criarCelulaImagem(PdfPTable tabela, string caminhoImagem,
+            int larguraImagem, int alturaImagem, int alturaCelula = 25)
+        {
+            //cor de fundo diferente para linhas pares e ímpares
+            var bgColor = iTextSharp.text.BaseColor.White;
+            if (tabela.Rows.Count % 2 == 1)
+                bgColor = new BaseColor(0.95f, 0.95f, 0.95f);
+
+            if (File.Exists(caminhoImagem))
+            {
+                iTextSharp.text.Image imagem =
+                    iTextSharp.text.Image.GetInstance(caminhoImagem);
+                imagem.ScaleToFit(larguraImagem, alturaImagem);
+                PdfPCell celula = new PdfPCell(imagem);
+                celula.HorizontalAlignment = PdfCell.ALIGN_CENTER;
+                celula.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+                celula.Border = 0;
+                celula.BorderWidthBottom = 1;
+                celula.FixedHeight = alturaCelula;
+                celula.BackgroundColor = bgColor;
+                tabela.AddCell(celula);
+            }
+            else
+            {
+                tabela.AddCell("ERRO");
+            }
+        }
+
+
+
+        // ===============================================================================
+
+
+        private void CriarCelulaTextoCorPersonalizada(PdfPTable tabela, string texto, BaseColor cor ,
+            int alinhamento = PdfPCell.ALIGN_LEFT, 
+            bool negrito = false, bool italico = false,
+            int tamanhoFonte = 12, int alturaCelula = 25)
+        {
+            int estilo = iTextSharp.text.Font.NORMAL;
+            if (negrito && italico)
+            {
+                estilo = iTextSharp.text.Font.BOLDITALIC;
+            }
+            else if (negrito)
+            {
+                estilo = iTextSharp.text.Font.BOLD;
+            }
+            else if (italico)
+            {
+                estilo = iTextSharp.text.Font.ITALIC;
+            }
+
+
+            BaseFont fonteBase = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, false);
+            iTextSharp.text.Font fonte = new iTextSharp.text.Font(fonteBase, tamanhoFonte,
+                estilo, iTextSharp.text.BaseColor.Black);
+
+            //cor de fundo diferente para linhas pares e ímpares
+
+            //var bgColor = iTextSharp.text.BaseColor.Gray;
+            //if (tabela.Rows.Count % 2 == 1)
+            //    bgColor = new BaseColor(0.95f, 0.95f, 0.95f);
+
+            PdfPCell celula = new PdfPCell(new Phrase(texto, fonte));
+            celula.HorizontalAlignment = alinhamento;
+            celula.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+            celula.Border = 0;
+            celula.BorderWidthBottom = 1;
+            celula.PaddingBottom = 5; //pra alinhar melhor verticalmente
+            celula.FixedHeight = alturaCelula;
+            celula.BackgroundColor = cor;
             tabela.AddCell(celula);
         }
     }
