@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemaDeEstacionamento.Helpers;
 using SistemaDeEstacionamento.Models;
 using SistemaDeEstacionamento.Models.DAO;
 using SistemaDeEstacionamento.Models.DTO;
@@ -30,7 +31,8 @@ namespace SistemaDeEstacionamento.Controllers
 
         public IActionResult Index()
         {
-            _clienteService.RetornarTodosClientes();
+            //GerarRelatorio.GerarRelatorioEntradasSaidasPdf();
+            //_clienteService.RetornarTodosClientes();
             return View();
         }
 

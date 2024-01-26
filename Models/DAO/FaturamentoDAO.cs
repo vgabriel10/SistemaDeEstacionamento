@@ -123,5 +123,33 @@ namespace SistemaDeEstacionamento.Models.DAO
             List<Despesa> saidasNoDia = _dbContext.Despesa.Where(x => x.DataDePagamento.Date == diaAtual.Date).ToList();
             return saidasNoDia;
         }
+
+        public List<RelatorioEntradaSaidaValorDTO> RetornarEntradaSaidaValorPorData(DateTime dataInicial, DateTime? dataFinal)
+        {
+            List<RelatorioEntradaSaidaValorDTO> entradaValores = _dbContext.ClienteVeiculoValor.Where(e => e.DataDePagamento >= dataInicial && e.DataDePagamento <= dataFinal)
+                                                                      .Select(e => new RelatorioEntradaSaidaValorDTO
+                                                                      {
+                                                                          Tipo = "Entrada",
+                                                                          DataPagamento = e.DataDePagamento,
+                                                                          FormaPagamento = e.TipoPagamento.FormaPagamento,
+                                                                          Valor = e.ValorTotal
+                                                                      }).ToList();
+
+
+            List<RelatorioEntradaSaidaValorDTO> saidaValores = _dbContext.Despesa.Where(s => s.DataDePagamento >= dataInicial && s.DataDePagamento <= dataFinal)
+                                                                      .Select(s => new RelatorioEntradaSaidaValorDTO
+                                                                      {
+                                                                          Tipo = "Saída",
+                                                                          DataPagamento = s.DataDePagamento,
+                                                                          FormaPagamento = s.TipoPagamento.FormaPagamento,
+                                                                          Valor = s.ValorTotal
+                                                                      }).ToList();
+
+            List<RelatorioEntradaSaidaValorDTO> entradaSaidaValores = new List<RelatorioEntradaSaidaValorDTO>();
+            entradaSaidaValores.AddRange(entradaValores);
+            entradaSaidaValores.AddRange(saidaValores);
+            List<RelatorioEntradaSaidaValorDTO> listaOrdenada = entradaSaidaValores.OrderBy(x => x.DataPagamento).ToList();
+            return listaOrdenada;
+        }
     }
 }

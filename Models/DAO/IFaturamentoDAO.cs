@@ -17,5 +17,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         public List<TipoPagamento> RetornarFormasPagamento();
         public List<ClienteVeiculoValor> RetornarEntradaDeValoresPeloDia(DateTime diaAtual);
         public List<Despesa> RetornarSaidaDeValoresPeloDia(DateTime diaAtual);
+        public List<RelatorioEntradaSaidaValorDTO> RetornarEntradaSaidaValorPorData(DateTime dataInicial, DateTime? dataFinal);
     }
 }

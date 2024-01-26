@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SistemaDeEstacionamento;
 using SistemaDeEstacionamento.Models.DAO;
 using SistemaDeEstacionamento.Service;
 
@@ -8,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BaseEstacionamentoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BaseEstacionamentoContext") ?? throw new InvalidOperationException("Connection string 'BaseEstacionamentoContext' not found.")));
 // Injeções de dependencias
-//builder.Services.AddScoped<IClienteDAO,ClienteDAO>();
 
 //Services
 builder.Services.AddTransient<IClienteService, ClienteService>();
@@ -17,6 +17,7 @@ builder.Services.AddTransient<IEstacionamentoService, EstacionamentoService>();
 builder.Services.AddTransient<IEstacionamentoDAO, EstacionamentoDAO>();
 builder.Services.AddTransient<IFaturamentoService, FaturamentoService>();
 builder.Services.AddTransient<IFaturamentoDAO, FaturamentoDAO>();
+builder.Services.AddTransient<IRelatorioService, RelatorioService>();
 
 
 // Add services to the container.

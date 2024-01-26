@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using SistemaDeEstacionamento.Helpers;
 using SistemaDeEstacionamento.Models;
 using SistemaDeEstacionamento.Models.DAO;
 using SistemaDeEstacionamento.Models.DTO;
@@ -27,12 +29,16 @@ namespace SistemaDeEstacionamento.Controllers
         private readonly IClienteService _clienteService;
         private readonly IEstacionamentoService _estacionamentoService;
         private readonly IFaturamentoService _faturamentoService;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        
 
-        public FaturamentoController(IClienteService clienteService, IEstacionamentoService estacionamentoService, IFaturamentoService faturamentoService)
+
+        public FaturamentoController(IClienteService clienteService, IEstacionamentoService estacionamentoService, IFaturamentoService faturamentoService, IWebHostEnvironment hostingEnvironment)
         {
             _clienteService = clienteService;
             _estacionamentoService = estacionamentoService;
             _faturamentoService = faturamentoService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         //public IActionResult Index()
@@ -103,6 +109,23 @@ namespace SistemaDeEstacionamento.Controllers
                 data = DateTime.Now;
             var saidasNoDia = _faturamentoService.RetornarSaidaDeValoresPeloDia((DateTime)data);
             return PartialView("_PartialRetornarSaidasValores", saidasNoDia);
+        }
+
+        public FileResult BaixarPdf([FromServices] IRelatorioService _relatorioService)
+        {
+            DateTime dataInicio = DateTime.Now.AddDays(-30);
+            DateTime dataFinal = DateTime.Now;
+            string caminho = _relatorioService.GerarRelatorioEntradasSaidasPdf(dataInicio, dataFinal);
+            var nomeArquivo = "Relatório";
+            var caminhoPDF = Path.Combine(_hostingEnvironment.ContentRootPath, nomeArquivo);
+
+            //WebApplicationOptions options = WebApplicationOptions
+
+            //WebApplication.
+            var b = HttpContext.Request.PathBase;
+
+            byte[] conteudoPdf = System.IO.File.ReadAllBytes(caminho);
+            return File(conteudoPdf, "application/pdf");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

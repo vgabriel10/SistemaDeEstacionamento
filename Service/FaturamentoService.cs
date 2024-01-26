@@ -125,5 +125,10 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
             return _faturamentoDAO.RetornarSaidaDeValoresPeloDia(diaAtual);
         }
+
+        public List<RelatorioEntradaSaidaValorDTO> RetornarEntradaSaidaValorPorData(DateTime dataInicial, DateTime? dataFinal)
+        {
+            return _faturamentoDAO.RetornarEntradaSaidaValorPorData(dataInicial,dataFinal);
+        }
     }
 }
