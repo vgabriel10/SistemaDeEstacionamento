@@ -6,6 +6,7 @@ using SistemaDeEstacionamento.Models.DTO;
 using SistemaDeEstacionamento.Service;
 using System.Diagnostics;
 using SistemaDeEstacionamento.Enums;
+using SistemaDeEstacionamento.Helpers;
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
@@ -36,15 +37,23 @@ namespace SistemaDeEstacionamento.Models.DAO
 
         public bool VerficarDataValida(DateTime dataInicio, DateTime? dataFinal)
         {
+            if(dataFinal == null)
+                dataFinal = DateTime.Now.Date;
             return true;
         }
 
         public string GerarRelatorioEntradasSaidasPdf(DateTime dataInicio, DateTime? dataFinal /*, Enum formato*/ )
         {
             List<RelatorioEntradaSaidaValorDTO> dadosRelatorio = new List<RelatorioEntradaSaidaValorDTO>();
-            if (VerficarDataValida(dataInicio, dataFinal))
+            if (VerficarDataValida(dataInicio.Date, dataFinal))
                 dadosRelatorio = _faturamentoService.RetornarEntradaSaidaValorPorData(dataInicio, dataFinal);
 
+
+            //Calculando o total de páginas
+            int totalPaginas = 1;
+            if (dadosRelatorio.Count > 24)
+                totalPaginas += (int)Math.Ceiling(
+                    (dadosRelatorio.Count - 24) / 29F);
 
             //configurar dados do PDF
             var pxPorMm = 72 / 25.2F;
@@ -54,7 +63,7 @@ namespace SistemaDeEstacionamento.Models.DAO
             string caminhoDoArquivo = RetornarCaminhoArquivo(nomeArquivo);
             FileStream arquivo = new FileStream(caminhoDoArquivo, FileMode.Create);
             var writer = PdfWriter.GetInstance(pdf, arquivo);
-            //writer.PageEvent = new RodapeRelatorioPDF(totalPaginas);
+            writer.PageEvent = new RodapeRelatorioPDF(totalPaginas);
             pdf.Open();
 
 
@@ -64,10 +73,18 @@ namespace SistemaDeEstacionamento.Models.DAO
             //adiciona um título
             var fonteParagrafo = new iTextSharp.text.Font(fonteBase, 26,
                 iTextSharp.text.Font.NORMAL, BaseColor.Black);
-            var titulo = new Paragraph("Relatório de Entrada e Saída de Valores\n\n", fonteParagrafo);
+            var titulo = new Paragraph("Relatório de Entrada e Saída de Valores\n", fonteParagrafo);
             titulo.Alignment = Element.ALIGN_LEFT;
             titulo.SpacingAfter = 4;
             pdf.Add(titulo);
+
+            // Adiciona informações sobre a data 
+            var fonteInfo = new iTextSharp.text.Font(fonteBase, 12,
+                iTextSharp.text.Font.COURIER, BaseColor.Black);
+            var informacoes = new Paragraph($"Dados referente as datas {dataInicio.ToString().Substring(0, 10)} e {dataFinal.ToString().Substring(0, 10)}\n\n", fonteInfo);
+            informacoes.Alignment = Element.ALIGN_LEFT;
+            informacoes.SpacingAfter = 4;
+            pdf.Add(informacoes);
 
 
             //adiciona uma imagem
@@ -95,10 +112,10 @@ namespace SistemaDeEstacionamento.Models.DAO
             tabela.WidthPercentage = 100;
 
             //adiciona os títulos das colunas
-            CriarCelulaTexto(tabela, "Tipo", PdfPCell.ALIGN_CENTER, true);
-            CriarCelulaTexto(tabela, "Data", PdfPCell.ALIGN_CENTER, true);
-            CriarCelulaTexto(tabela, "Forma de Pagamento", PdfPCell.ALIGN_CENTER, true);
-            CriarCelulaTexto(tabela, "Valor", PdfPCell.ALIGN_CENTER, true);
+            CriarCelulaTextoCorPersonalizada(tabela, "Tipo", BaseColor.LightGray, PdfPCell.ALIGN_CENTER, true);
+            CriarCelulaTextoCorPersonalizada(tabela, "Data", BaseColor.LightGray, PdfPCell.ALIGN_CENTER, true);
+            CriarCelulaTextoCorPersonalizada(tabela, "Forma de Pagamento", BaseColor.LightGray, PdfPCell.ALIGN_CENTER, true);
+            CriarCelulaTextoCorPersonalizada(tabela, "Valor", BaseColor.LightGray, PdfPCell.ALIGN_CENTER, true);
 
 
 
