@@ -8,6 +8,8 @@ using System.Diagnostics;
 using SistemaDeEstacionamento.Enums;
 using SistemaDeEstacionamento.Helpers;
 using System.Runtime.ConstrainedExecution;
+using System.Drawing;
+using System.Globalization;
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
@@ -38,7 +40,7 @@ namespace SistemaDeEstacionamento.Models.DAO
 
         public bool VerficarDataValida(DateTime dataInicio, DateTime? dataFinal)
         {
-            if(dataFinal == null)
+            if (dataFinal == null)
                 dataFinal = DateTime.Now.Date;
             return true;
         }
@@ -79,7 +81,7 @@ namespace SistemaDeEstacionamento.Models.DAO
             titulo.SpacingAfter = 4;
             pdf.Add(titulo);
 
-            
+
 
             // Adiciona informações sobre a data 
             var fonteInfo = new iTextSharp.text.Font(fonteBase, 12,
@@ -90,12 +92,36 @@ namespace SistemaDeEstacionamento.Models.DAO
             pdf.Add(informacoes);
 
             // Total Entradas e Total Saídas
-            var fonteTotalEntradasSaidas = new iTextSharp.text.Font(fonteBase, 12,
-                iTextSharp.text.Font.COURIER, BaseColor.Black);
-            var totalEntradasSaidas = new Paragraph($"Total de Entradas R$: 15.000 | Total de Saídas: R$: 3.000 | Saldo:12.000\n\n", fonteInfo);
+
+            decimal totalEntradas = 0, totalSaidas = 0, saldo = 0;
+            foreach (var item in dadosRelatorio)
+            {
+                if (item.Tipo.Equals("Entrada"))
+                    totalEntradas += item.Valor;
+                else
+                    totalSaidas += item.Valor;
+
+                saldo = totalEntradas - totalSaidas;
+            }
+
+            var fonteNegativo = new iTextSharp.text.Font(fonteBase, 12,
+            iTextSharp.text.Font.COURIER, BaseColor.Red);
+            var fontePositivo = new iTextSharp.text.Font(fonteBase, 12,
+            iTextSharp.text.Font.COURIER, BaseColor.Green);
+
+            var totalEntradasSaidas = new Paragraph($"Total de Entradas: {string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", totalEntradas)} | Total de Saídas: {string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", totalSaidas)} | ", fonteInfo);
             totalEntradasSaidas.Alignment = Element.ALIGN_LEFT;
             totalEntradasSaidas.SpacingAfter = 4;
-    
+
+            var paragrafo = new Paragraph();
+
+            if (saldo >= 0)
+                paragrafo = new Paragraph($"Saldo: {string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", saldo)}\n", fontePositivo);
+            else
+                paragrafo = new Paragraph($"Saldo: {string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", saldo)}\n", fonteNegativo);
+            
+            totalEntradasSaidas.Add(paragrafo);
+
             pdf.Add(totalEntradasSaidas);
 
 
@@ -177,7 +203,7 @@ namespace SistemaDeEstacionamento.Models.DAO
                     CriarCelulaTextoCorPersonalizada(tabela, item.FormaPagamento, BaseColor.White, PdfPCell.ALIGN_CENTER);
                     CriarCelulaTextoCorPersonalizada(tabela, item.Valor.ToString("C2"), BaseColor.Red, PdfPCell.ALIGN_RIGHT);
                 }
-                
+
 
 
                 //var caminhoImagemCelula = p.Empregado ?
@@ -284,8 +310,8 @@ namespace SistemaDeEstacionamento.Models.DAO
         // ===============================================================================
 
 
-        private void CriarCelulaTextoCorPersonalizada(PdfPTable tabela, string texto, BaseColor cor ,
-            int alinhamento = PdfPCell.ALIGN_LEFT, 
+        private void CriarCelulaTextoCorPersonalizada(PdfPTable tabela, string texto, BaseColor cor,
+            int alinhamento = PdfPCell.ALIGN_LEFT,
             bool negrito = false, bool italico = false,
             int tamanhoFonte = 12, int alturaCelula = 25)
         {
