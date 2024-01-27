@@ -7,6 +7,7 @@ using SistemaDeEstacionamento.Service;
 using System.Diagnostics;
 using SistemaDeEstacionamento.Enums;
 using SistemaDeEstacionamento.Helpers;
+using System.Runtime.ConstrainedExecution;
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
@@ -78,13 +79,24 @@ namespace SistemaDeEstacionamento.Models.DAO
             titulo.SpacingAfter = 4;
             pdf.Add(titulo);
 
+            
+
             // Adiciona informações sobre a data 
             var fonteInfo = new iTextSharp.text.Font(fonteBase, 12,
                 iTextSharp.text.Font.COURIER, BaseColor.Black);
-            var informacoes = new Paragraph($"Dados referente as datas {dataInicio.ToString().Substring(0, 10)} e {dataFinal.ToString().Substring(0, 10)}\n\n", fonteInfo);
+            var informacoes = new Paragraph($"Dados referente à {dataInicio.ToString().Substring(0, 10)} até {dataFinal.ToString().Substring(0, 10)}\n\n", fonteInfo);
             informacoes.Alignment = Element.ALIGN_LEFT;
             informacoes.SpacingAfter = 4;
             pdf.Add(informacoes);
+
+            // Total Entradas e Total Saídas
+            var fonteTotalEntradasSaidas = new iTextSharp.text.Font(fonteBase, 12,
+                iTextSharp.text.Font.COURIER, BaseColor.Black);
+            var totalEntradasSaidas = new Paragraph($"Total de Entradas R$: 15.000 | Total de Saídas: R$: 3.000 | Saldo:12.000\n\n", fonteInfo);
+            totalEntradasSaidas.Alignment = Element.ALIGN_LEFT;
+            totalEntradasSaidas.SpacingAfter = 4;
+    
+            pdf.Add(totalEntradasSaidas);
 
 
             //adiciona uma imagem
@@ -110,6 +122,7 @@ namespace SistemaDeEstacionamento.Models.DAO
             tabela.SetWidths(larguras);
             tabela.DefaultCell.BorderWidth = 0;
             tabela.WidthPercentage = 100;
+
 
             //adiciona os títulos das colunas
             CriarCelulaTextoCorPersonalizada(tabela, "Tipo", BaseColor.LightGray, PdfPCell.ALIGN_CENTER, true);
@@ -152,16 +165,16 @@ namespace SistemaDeEstacionamento.Models.DAO
             {
                 if (item.Tipo.Equals("Entrada"))
                 {
-                    CriarCelulaTextoCorPersonalizada(tabela, item.Tipo, BaseColor.Green, PdfPCell.ALIGN_CENTER);
-                    CriarCelulaTextoCorPersonalizada(tabela, item.DataPagamento.ToString(), BaseColor.Green, PdfPCell.ALIGN_CENTER);
-                    CriarCelulaTextoCorPersonalizada(tabela, item.FormaPagamento, BaseColor.Green, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.Tipo, BaseColor.White, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.DataPagamento.ToString(), BaseColor.White, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.FormaPagamento, BaseColor.White, PdfPCell.ALIGN_CENTER);
                     CriarCelulaTextoCorPersonalizada(tabela, item.Valor.ToString("C2"), BaseColor.Green, PdfPCell.ALIGN_RIGHT);
                 }
                 else
                 {
-                    CriarCelulaTextoCorPersonalizada(tabela, item.Tipo, BaseColor.Red, PdfPCell.ALIGN_CENTER);
-                    CriarCelulaTextoCorPersonalizada(tabela, item.DataPagamento.ToString(), BaseColor.Red, PdfPCell.ALIGN_CENTER);
-                    CriarCelulaTextoCorPersonalizada(tabela, item.FormaPagamento, BaseColor.Red, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.Tipo, BaseColor.White, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.DataPagamento.ToString(), BaseColor.White, PdfPCell.ALIGN_CENTER);
+                    CriarCelulaTextoCorPersonalizada(tabela, item.FormaPagamento, BaseColor.White, PdfPCell.ALIGN_CENTER);
                     CriarCelulaTextoCorPersonalizada(tabela, item.Valor.ToString("C2"), BaseColor.Red, PdfPCell.ALIGN_RIGHT);
                 }
                 
@@ -309,6 +322,30 @@ namespace SistemaDeEstacionamento.Models.DAO
             celula.PaddingBottom = 5; //pra alinhar melhor verticalmente
             celula.FixedHeight = alturaCelula;
             celula.BackgroundColor = cor;
+            tabela.AddCell(celula);
+        }
+
+
+        public void AdicionarLinha(PdfPTable tabela)
+        {
+
+            //cor de fundo diferente para linhas pares e ímpares
+
+            //var bgColor = iTextSharp.text.BaseColor.Gray;
+            //if (tabela.Rows.Count % 2 == 1)
+            //    bgColor = new BaseColor(0.95f, 0.95f, 0.95f);
+
+            PdfPCell celula = new PdfPCell();
+            //celula.HorizontalAlignment = alinhamento;
+            //celula.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+            //celula.Border = 0;
+            //celula.BorderWidthBottom = 1;
+            //celula.PaddingBottom = 5; //pra alinhar melhor verticalmente
+            //celula.FixedHeight = alturaCelula;
+            celula.BackgroundColor = iTextSharp.text.BaseColor.Black;
+
+
+            celula.BorderWidthTop = 1.5f;
             tabela.AddCell(celula);
         }
     }
