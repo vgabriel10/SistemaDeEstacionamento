@@ -4,10 +4,23 @@
 
 <script>
     $(function () {
+        InicializaComponentes();
         //$('#partialView_RetornarPrecoDia').load(`/Faturamento/PartialRetornarPrecoDia?dia=${dia}`);
         $('#partialView_RetornarEntradasValores').load(`/Faturamento/PartialRetornarEntradasValores`);
         $('#partialView_RetornarSaidasValores').load(`/Faturamento/PartialRetornarSaidaValores`);
     });
+
+    function InicializaComponentes() {
+        carregarCampoData('#calendario', null, null);
+        $('#calendario').mask('99/99/9999');
+    }
+
+    function Calendario() {
+            $("#calendario").datepicker();
+        console.log('Cheguei');
+
+    }
+
 </script>
 
 
@@ -35,3 +48,5 @@
 <form action="/Faturamento/BaixarPdf" method="post">
     <button type="submit">Gerar Relatório</button>
 </form>
+
+<input type="text" id="calendario" name="previsaoConclusao" style="width:200px;" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" />
