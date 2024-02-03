@@ -4,6 +4,6 @@ namespace SistemaDeEstacionamento.Service
 {
     public interface IRelatorioService
     {
-        public string GerarRelatorioEntradasSaidasPdf(DateTime dataInicio, DateTime? dataFinal);
+        public string GerarRelatorioEntradasSaidasPdf(DateTime dataInicio, DateTime dataFinal);
     }
 }

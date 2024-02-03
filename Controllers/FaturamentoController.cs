@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SistemaDeEstacionamento.Exceptions;
 using SistemaDeEstacionamento.Helpers;
 using SistemaDeEstacionamento.Models;
 using SistemaDeEstacionamento.Models.DAO;
@@ -111,21 +112,36 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialRetornarSaidasValores", saidasNoDia);
         }
 
-        public FileResult BaixarPdf([FromServices] IRelatorioService _relatorioService)
+        public IActionResult PartialGerarRelatorioValores()
+        {           
+            return PartialView("_PartialGerarRelatorioValores");
+        }
+
+        [HttpGet]
+        public IActionResult BaixarPdf(DateTime dataInicio, DateTime dataFinal,[FromServices] IRelatorioService _relatorioService)
         {
-            DateTime dataInicio = DateTime.Now.AddDays(-30);
-            DateTime dataFinal = DateTime.Now;
-            string caminho = _relatorioService.GerarRelatorioEntradasSaidasPdf(dataInicio, dataFinal);
-            var nomeArquivo = "Relatório";
-            var caminhoPDF = Path.Combine(_hostingEnvironment.ContentRootPath, nomeArquivo);
+            try
+            {
+                string caminho = _relatorioService.GerarRelatorioEntradasSaidasPdf(dataInicio, dataFinal);
+                var nomeArquivo = "Entradas e Saídas " + dataInicio + " até " + dataFinal + ".pdf";
+                var caminhoPDF = Path.Combine(_hostingEnvironment.ContentRootPath, nomeArquivo);
 
-            //WebApplicationOptions options = WebApplicationOptions
 
-            //WebApplication.
-            var b = HttpContext.Request.PathBase;
+                var b = HttpContext.Request.PathBase;
 
-            byte[] conteudoPdf = System.IO.File.ReadAllBytes(caminho);
-            return File(conteudoPdf, "application/pdf");
+                byte[] conteudoPdf = System.IO.File.ReadAllBytes(caminho);
+                TempData["Sucesso"] = "Relatório baixado com sucesso!";
+                return File(conteudoPdf, "application/pdf", nomeArquivo);
+            }
+            catch (RelatorioException ex)
+            {
+                return StatusCode(ex.CodigoErro);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500);
+            }
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

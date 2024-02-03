@@ -6,8 +6,9 @@
     $(function () {
         InicializaComponentes();
         //$('#partialView_RetornarPrecoDia').load(`/Faturamento/PartialRetornarPrecoDia?dia=${dia}`);
-        $('#partialView_RetornarEntradasValores').load(`/Faturamento/PartialRetornarEntradasValores`);
-        $('#partialView_RetornarSaidasValores').load(`/Faturamento/PartialRetornarSaidaValores`);
+
+        //$('#partialView_RetornarEntradasValores').load(`/Faturamento/PartialRetornarEntradasValores`);
+        //$('#partialView_RetornarSaidasValores').load(`/Faturamento/PartialRetornarSaidaValores`);
     });
 
     function InicializaComponentes() {
@@ -15,10 +16,23 @@
         $('#calendario').mask('99/99/9999');
     }
 
-    function Calendario() {
-            $("#calendario").datepicker();
-        console.log('Cheguei');
+    function Tab1(){
+        $("#partialView_GerarRelatorioValores").hide();
+        $("#partialView_RetornarEntradasValores").show();
+        $("#partialView_RetornarSaidasValores").show();
 
+        $('#partialView_RetornarEntradasValores').load(`/Faturamento/PartialRetornarEntradasValores`);
+        $('#partialView_RetornarSaidasValores').load(`/Faturamento/PartialRetornarSaidaValores`);
+        InicializaComponentes();
+    }
+
+    function Tab2(){
+        $("#partialView_RetornarEntradasValores").hide();
+        $("#partialView_RetornarSaidasValores").hide();
+        $("#partialView_GerarRelatorioValores").show();
+
+        $('#partialView_GerarRelatorioValores').load(`/Faturamento/PartialGerarRelatorioValores`);
+        InicializaComponentes();
     }
 
 </script>
@@ -27,26 +41,48 @@
 <h1>@ViewData["Title"]</h1>
 
 
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" onclick="Tab1();">Home</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" onclick="Tab2();">Gerar Relatório</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+    </div>
+</nav>
+@*<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+</div>*@
+
+
+
 <div class="row">
     <div id="partialView_RetornarEntradasValores" class="col-md-6">
         @await Html.PartialAsync("_PartialRetornarEntradasValores")
     </div>
-
     <div id="partialView_RetornarSaidasValores" class="col-md-6">
         @await Html.PartialAsync("_PartialRetornarSaidasValores")
     </div>
+    
 </div>
 
 <div class="row">
+    <div id="partialView_GerarRelatorioValores" class="col-md-12">
+    </div>
+</div>
+
+
+@*<div class="row">
     <div class="col-md-6">
         <label>Entradas: R$ 100</label>
         <label>Saídas: R$ 20</label>
         <label>Saldo: R$ 80</label>
     </div>
+</div>*@
+
+<div id="partialView_ListarVeiculos">
 </div>
 
-<form action="/Faturamento/BaixarPdf" method="post">
-    <button type="submit">Gerar Relatório</button>
-</form>
 
-<input type="text" id="calendario" name="previsaoConclusao" style="width:200px;" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" />
+
+

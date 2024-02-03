@@ -116,3 +116,74 @@ function ValidarDropDownList(valor) {
     if (valor === 0 || valor === null || valor === '0' || valor === '' || valor === undefined)
         return false;
 }
+
+function ValidarTamanhoData(idData) {
+    let valorData = $('#' + idData).val();
+    if (valorData.length != 10) {
+        return false;
+    }
+}
+
+function ValidarDatas(idDataInicial, idDataFinal) {
+    try {
+        let dataInicial = $('#' + idDataInicial).val();
+        let dataFinal = $('#' + idDataFinal).val();
+        // Convertendo as strings de data para objetos Date
+        let partesDataInicial = dataInicial.split('/');
+        let diaInicial = parseInt(partesDataInicial[0], 10);
+        let mesInicial = parseInt(partesDataInicial[1], 10) - 1; // Mês começa em 0 (janeiro)
+        let anoInicial = parseInt(partesDataInicial[2], 10);
+        let dataInicialObj = new Date(anoInicial, mesInicial, diaInicial);
+
+        let partesDataFinal = dataFinal.split('/');
+        let diaFinal = parseInt(partesDataFinal[0], 10);
+        let mesFinal = parseInt(partesDataFinal[1], 10) - 1; // Mês começa em 0 (janeiro)
+        let anoFinal = parseInt(partesDataFinal[2], 10);
+        let dataFinalObj = new Date(anoFinal, mesFinal, diaFinal);
+
+        // Comparando as datas
+        if (dataInicialObj > dataFinalObj) {
+            return false; // Data inicial é maior que a data final
+        } else {
+            return true; // Data inicial não é maior que a data final
+        }
+    } catch (erro) {
+        return false;
+    }
+    
+
+    
+}
+
+
+//function ValidarDatas(idDataInicial, idDataFinal) {
+//    let dataInicial = new Date($('#' + idDataInicial).val().replace('/','-'));
+//    let dataFinal = new Date($('#' + idDataFinal).val().replace('/', '-'));
+//    console.log(dataInicial);
+//    console.log(dataFinal);
+//    console.log($('#' + idDataInicial).val());
+//    console.log($('#' + idDataFinal).val());
+//    if (!dataInicial || !dataFinal) return false;
+//    if (dataInicial > dataFinal) {
+//        alert("Data incorreta!");
+//        return false;
+//    } else {
+//        alert("Data Correta!");
+//        return true
+//    }
+//}
+
+function ValidarDatas2(idDataInicial, idDataFinal) {
+    let dataInicial = moment($('#' + idDataInicial).val());
+    let dataFinal = moment($('#' + idDataFinal).val());
+    console.log(dataInicial);
+    console.log(dataFinal);
+    if (!dataInicial || !dataFinal) return false;
+    if (dataInicial > dataFinal) {
+        alert("Data incorreta!");
+        return false;
+    } else {
+        alert("Data Correta!");
+        return true
+    }
+}
