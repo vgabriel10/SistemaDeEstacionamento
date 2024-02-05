@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using SistemaDeEstacionamento.Exceptions;
 using SistemaDeEstacionamento.Helpers;
 using SistemaDeEstacionamento.Models;
@@ -117,12 +116,14 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialGerarRelatorioValores");
         }
 
+        
         [HttpGet]
-        public IActionResult BaixarPdf(DateTime dataInicio, DateTime dataFinal,[FromServices] IRelatorioService _relatorioService)
+        public IActionResult BaixarPdf(string dataInicio, string dataFinal,[FromServices] IRelatorioService _relatorioService)
         {
             try
             {
-                string caminho = _relatorioService.GerarRelatorioEntradasSaidasPdf(dataInicio, dataFinal);
+
+                string caminho = _relatorioService.GerarRelatorioEntradasSaidasPdf(DataConvertida.FormatoPt_Br(dataInicio), DataConvertida.FormatoPt_Br(dataFinal));
                 var nomeArquivo = "Entradas e Saídas " + dataInicio + " até " + dataFinal + ".pdf";
                 var caminhoPDF = Path.Combine(_hostingEnvironment.ContentRootPath, nomeArquivo);
 

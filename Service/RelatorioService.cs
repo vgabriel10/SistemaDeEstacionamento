@@ -43,9 +43,9 @@ namespace SistemaDeEstacionamento.Models.DAO
 
         private bool VerficarDataValida(DateTime dataInicio, DateTime dataFinal)
         {
-            string dataInicioString = dataInicio.Date.ToString("dd-MM-yyyy");
-            string dataFinalString = dataFinal.Date.ToString("dd-MM-yyyy");
-            if (!DateTime.TryParseExact(dataInicioString, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None,out dataInicio) && !DateTime.TryParseExact(dataFinalString, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out dataFinal))
+            string dataInicioString = dataInicio.Date.ToString("dd/MM/yyyy");
+            string dataFinalString = dataFinal.Date.ToString("dd/MM/yyyy");
+            if (!DateTime.TryParseExact(dataInicioString, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None,out dataInicio) && !DateTime.TryParseExact(dataFinalString, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out dataFinal))
                 throw new RelatorioException("Data Inválida!");
             return true;
         }

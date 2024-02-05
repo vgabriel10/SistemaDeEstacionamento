@@ -21,18 +21,6 @@
         $('#dtFinal').mask('99/99/9999');
     }
 
-    //function ValidarDados(e) {
-    //    if (ValidarTamanhoData('dtInicial') == false || ValidarTamanhoData('dtFinal') == false) {
-    //        e.preventDefault();
-    //        return AlertaErroSemBotao('Data Inválida!');
-    //    }
-
-    //    if (!ValidarDatas('dtInicial', 'dtFinal')) {
-    //        e.preventDefault();
-    //        return AlertaErroSemBotao('A data Inicial é maior que a data Final!');
-    //    }
-    //}
-
     function ValidarDados() {
         if (ValidarTamanhoData('dtInicio') == false || ValidarTamanhoData('dtFinal') == false) {
             return AlertaErroSemBotao('Data Inválida!');
@@ -65,10 +53,10 @@
                     link.download = "Entradas e Saídas " + dataInicio + " até " + dataFinal + ".pdf";
                     link.click();
                     AlertaSucessoComBotao('Arquivo baixado com sucesso!');
-                } 
+                }
                 else if (req.status === 204) {
                     AlertaErroComBotao("Não existe dados referente o periodo selecionado!");
-                } 
+                }
                 else {
                     AlertaErroComBotao("Erro ao tentar baixar o relatório! " + req.statusText);
                 }
@@ -78,26 +66,6 @@
     }
 
 </script>
-
-
-@*<form action="/Faturamento/BaixarPdf" method="post">
-    <h2>Geração de Relatórios</h2>
-    <div class="row" style="margin-top:30px;">
-        <div class="col-md-12">
-            <p>Selecione o periodo para a geração do relatório</p>
-            <span>Data de Início: </span>
-            <input class="data" type="text" id="dtInicial" name="dataInicio" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" required />
-            <span style="margin-left:25px;">Data Final: </span>
-            <input class="data" type="text" id="dtFinal" name="dataFinal" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" required />
-        </div>
-    </div>
-    <div class="row" style="margin-top:30px;">
-        <div class="col-md-12">
-            <button class="btn btn-primary" type="submit" onclick="ValidarDados();">Gerar Relatório</button>
-        </div>
-    </div>
-
-</form>*@
 
 
 <h2>Geração de Relatórios</h2>

@@ -6,14 +6,27 @@ namespace SistemaDeEstacionamento.Helpers
     public class DataConvertida
     {
 
-        private readonly IEstacionamentoService _estacionamentoService;
-        private readonly IFaturamentoService _faturamentoService;
-
-        public DataConvertida(IEstacionamentoService estacionamentoService, IFaturamentoService faturamentoService)
+    
+        public static DateTime FormatoPt_Br(string dataRecebida)
         {
-            _estacionamentoService = estacionamentoService;
-            _faturamentoService = faturamentoService;
+            try
+            {
+                DateTime data;
+                string formatoData = "dd/MM/yyyy";
+                if (DateTime.TryParseExact(dataRecebida, formatoData,null, System.Globalization.DateTimeStyles.None, out data))
+                    return data;
+
+
+                throw new Exception("Data Inválida!");
+            }
+            catch
+            {
+                throw new Exception("Data Inválida!");
+            }
+            
+               
         }
+
 
         /// <summary>
         /// 
