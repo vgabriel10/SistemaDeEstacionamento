@@ -17,5 +17,6 @@ namespace SistemaDeEstacionamento.Models.DAO
         public int RetornarIdDiaPeloNome(string dia);
         public Vaga informacoesSobreVagas();
         public List<Lembrete> RetornarLembretes();
+        public Task AdicionarQuantidadeVagasTotaisNoEstacionamento(int totalVagas);
     }
 }

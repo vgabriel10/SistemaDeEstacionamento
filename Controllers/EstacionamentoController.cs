@@ -109,6 +109,17 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialLembretes", lembretes);
         }
 
+        [HttpPost]
+        public IActionResult RegistrarTotalVagasEstacionamento(int totalVagas)
+        {
+            _estacionamentoService.AdicionarQuantidadeVagasTotaisNoEstacionamento(totalVagas);
+            //ViewBag.Vagas = veiculo;
+            //ViewBag.Cliente = cliente;
+            //ViewBag.TiposPagamentos = formasDePagamento;
+            //Response.Redirect("/Home/RegistrarSaida");
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

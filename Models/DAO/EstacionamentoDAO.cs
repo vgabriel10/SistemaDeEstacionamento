@@ -13,6 +13,25 @@ namespace SistemaDeEstacionamento.Models.DAO
             _dbContext = dbContext;
         }
 
+        public async Task AdicionarQuantidadeVagasTotaisNoEstacionamento(int totalVagas)
+        {
+            try
+            {
+                var vagas = new Vaga
+                {
+                    TotalVagas = totalVagas
+                };
+                await _dbContext.Vaga.AddAsync(vagas);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+
+        }
+
         public Vaga informacoesSobreVagas()
         {
             //return _dbContext.Vaga.FirstOrDefault();

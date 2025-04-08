@@ -16,11 +16,20 @@ namespace SistemaDeEstacionamento.Models.DAO
             _estacionamentoDAO = estacionamentoDAO;
         }
 
+        #endregion
+
+        public async Task AdicionarQuantidadeVagasTotaisNoEstacionamento(int totalVagas)
+        {
+            if (totalVagas < 1)
+                return;
+
+            await _estacionamentoDAO.AdicionarQuantidadeVagasTotaisNoEstacionamento(totalVagas);
+        }
+
         public Vaga informacoesSobreVagas()
         {
             return _estacionamentoDAO.informacoesSobreVagas();
         }
-        #endregion
 
         public void RegistrarEntradaVeiculo(VeiculosNoEstacionamentoDTO dadosVeiculo)
         {

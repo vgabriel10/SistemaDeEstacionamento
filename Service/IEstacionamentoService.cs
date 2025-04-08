@@ -18,5 +18,6 @@ namespace SistemaDeEstacionamento.Service
         public int RetornarIdDiaPeloNome(string dia);
         public Vaga informacoesSobreVagas();
         public List<Lembrete> RetornarLembretes();
+        public Task AdicionarQuantidadeVagasTotaisNoEstacionamento(int totalVagas);
     }
 }
