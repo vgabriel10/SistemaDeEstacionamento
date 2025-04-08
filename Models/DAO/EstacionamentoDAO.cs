@@ -17,12 +17,23 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
             try
             {
-                var vagas = new Vaga
+                var infoVagas = _dbContext.Vaga.ToList();
+                if(infoVagas is null || infoVagas.Count == 0)
                 {
-                    TotalVagas = totalVagas
-                };
-                await _dbContext.Vaga.AddAsync(vagas);
-                await _dbContext.SaveChangesAsync();
+                    var vagas = new Vaga
+                    {
+                        TotalVagas = totalVagas
+                    };
+                    await _dbContext.Vaga.AddAsync(vagas);
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    infoVagas[0].TotalVagas = totalVagas;
+                    _dbContext.Update(infoVagas);
+                    await _dbContext.SaveChangesAsync();
+                }
+                
             }
             catch(Exception ex)
             {
