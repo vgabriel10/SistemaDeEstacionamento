@@ -17,7 +17,7 @@
                 console.log('Resposta do servidor:', response);
                 alert('Deu certo!');
                 $('#btnFecharModal').click();
-                //$('#partialView_ExibirPrecoDia').load(`/Faturamento/PartialExibirPrecoDia?dia=${diaSelecinado}`);
+                $('#partialView_RetornarVagas').load(`/Estacionamento/PartialRetornarVagas`);
             },
             error: function (error) {
                 console.error('Erro na solicitação:', error);
