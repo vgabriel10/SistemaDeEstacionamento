@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
-    public class EstacionamentoDAO : DbContext , IEstacionamentoDAO 
+    public class EstacionamentoDAO : IEstacionamentoDAO 
     {
         private readonly BaseEstacionamentoContext _dbContext;
 
@@ -17,7 +17,7 @@ namespace SistemaDeEstacionamento.Models.DAO
         {
             try
             {
-                var infoVagas = _dbContext.Vaga.ToList();
+                var infoVagas = await _dbContext.Vaga.ToListAsync();
                 if(infoVagas is null || infoVagas.Count == 0)
                 {
                     var vagas = new Vaga
@@ -30,7 +30,7 @@ namespace SistemaDeEstacionamento.Models.DAO
                 else
                 {
                     infoVagas[0].TotalVagas = totalVagas;
-                    _dbContext.Update(infoVagas);
+                    _dbContext.Update(infoVagas[0]);
                     await _dbContext.SaveChangesAsync();
                 }
                 

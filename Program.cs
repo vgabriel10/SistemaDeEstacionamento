@@ -11,13 +11,13 @@ builder.Services.AddDbContext<BaseEstacionamentoContext>(options =>
 // Injeções de dependencias
 
 //Services
-builder.Services.AddTransient<IClienteService, ClienteService>();
-builder.Services.AddTransient<IClienteDAO, ClienteDAO>();
-builder.Services.AddTransient<IEstacionamentoService, EstacionamentoService>();
-builder.Services.AddTransient<IEstacionamentoDAO, EstacionamentoDAO>();
-builder.Services.AddTransient<IFaturamentoService, FaturamentoService>();
-builder.Services.AddTransient<IFaturamentoDAO, FaturamentoDAO>();
-builder.Services.AddTransient<IRelatorioService, RelatorioService>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IClienteDAO, ClienteDAO>();
+builder.Services.AddScoped<IEstacionamentoService, EstacionamentoService>();
+builder.Services.AddScoped<IEstacionamentoDAO, EstacionamentoDAO>();
+builder.Services.AddScoped<IFaturamentoService, FaturamentoService>();
+builder.Services.AddScoped<IFaturamentoDAO, FaturamentoDAO>();
+builder.Services.AddScoped<IRelatorioService, RelatorioService>();
 
 
 // Add services to the container.

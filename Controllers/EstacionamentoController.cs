@@ -110,9 +110,9 @@ namespace SistemaDeEstacionamento.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistrarTotalVagasEstacionamento(int totalVagas)
+        public async Task<IActionResult> RegistrarTotalVagasEstacionamento(int totalVagas)
         {
-            _estacionamentoService.AdicionarQuantidadeVagasTotaisNoEstacionamento(totalVagas);
+            await _estacionamentoService.AdicionarQuantidadeVagasTotaisNoEstacionamento(totalVagas);
             //ViewBag.Vagas = veiculo;
             //ViewBag.Cliente = cliente;
             //ViewBag.TiposPagamentos = formasDePagamento;
