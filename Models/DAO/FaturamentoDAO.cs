@@ -126,7 +126,7 @@ namespace SistemaDeEstacionamento.Models.DAO
 
         public List<RelatorioEntradaSaidaValorDTO> RetornarEntradaSaidaValorPorData(DateTime dataInicial, DateTime? dataFinal)
         {
-            List<RelatorioEntradaSaidaValorDTO> entradaValores = _dbContext.ClienteVeiculoValor.Where(e => e.DataDePagamento >= dataInicial && e.DataDePagamento <= dataFinal)
+            List<RelatorioEntradaSaidaValorDTO> entradaValores = _dbContext.ClienteVeiculoValor.Where(e => e.DataDePagamento.Date >= dataInicial && e.DataDePagamento.Date <= dataFinal)
                                                                       .Select(e => new RelatorioEntradaSaidaValorDTO
                                                                       {
                                                                           Tipo = "Entrada",
@@ -136,7 +136,7 @@ namespace SistemaDeEstacionamento.Models.DAO
                                                                       }).ToList();
 
 
-            List<RelatorioEntradaSaidaValorDTO> saidaValores = _dbContext.Despesa.Where(s => s.DataDePagamento >= dataInicial && s.DataDePagamento <= dataFinal)
+            List<RelatorioEntradaSaidaValorDTO> saidaValores = _dbContext.Despesa.Where(s => s.DataDePagamento.Date >= dataInicial && s.DataDePagamento.Date <= dataFinal)
                                                                       .Select(s => new RelatorioEntradaSaidaValorDTO
                                                                       {
                                                                           Tipo = "Saída",
