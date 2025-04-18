@@ -46,7 +46,7 @@ namespace SistemaDeEstacionamento.Models.DAO
             dadosVeiculoSaida.TempoEstacionado = tempoEstacionado.ToString();
             double quantMinutos = tempoEstacionado.TotalMinutes;
             double quantHoras = quantMinutos / 60;
-            if (quantHoras < 0 )
+            if (quantHoras < 1 )
             {
                 valorBruto = precoHora;
             }
