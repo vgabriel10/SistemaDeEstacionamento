@@ -1,6 +1,6 @@
 ﻿using SistemaDeEstacionamento.Models;
 
-namespace SistemaDeEstacionamento.Service
+namespace SistemaDeEstacionamento.Service.Interfaces
 {
     public interface IRelatorioService
     {

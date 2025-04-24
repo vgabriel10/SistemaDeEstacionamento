@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeEstacionamento.DAO.Interface;
+using SistemaDeEstacionamento.Data;
+using SistemaDeEstacionamento.Models;
 using SistemaDeEstacionamento.Models.DTO;
 using System.Security.Cryptography;
 
-namespace SistemaDeEstacionamento.Models.DAO
+namespace SistemaDeEstacionamento.DAO
 {
     public class FaturamentoDAO : DbContext, IFaturamentoDAO
     {

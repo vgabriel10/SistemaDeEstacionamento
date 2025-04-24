@@ -1,7 +1,7 @@
 ﻿using SistemaDeEstacionamento.Models;
 using SistemaDeEstacionamento.Models.DTO;
 
-namespace SistemaDeEstacionamento.Service
+namespace SistemaDeEstacionamento.Service.Interfaces
 {
     public interface IEstacionamentoService
     {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeEstacionamento.DAO.Interface;
 using SistemaDeEstacionamento.Helpers;
 using SistemaDeEstacionamento.Models.DTO;
-using SistemaDeEstacionamento.Service;
+using SistemaDeEstacionamento.Service.Interfaces;
 using System.Globalization;
 
 namespace SistemaDeEstacionamento.Models.DAO

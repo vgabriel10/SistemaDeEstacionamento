@@ -1,6 +1,7 @@
-﻿using SistemaDeEstacionamento.Models.DTO;
+﻿using SistemaDeEstacionamento.Models;
+using SistemaDeEstacionamento.Models.DTO;
 
-namespace SistemaDeEstacionamento.Models.DAO
+namespace SistemaDeEstacionamento.DAO.Interface
 {
     public interface IEstacionamentoDAO
     {

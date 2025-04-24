@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaDeEstacionamento;
+using SistemaDeEstacionamento.DAO;
+using SistemaDeEstacionamento.DAO.Interface;
+using SistemaDeEstacionamento.Data;
 using SistemaDeEstacionamento.Models.DAO;
-using SistemaDeEstacionamento.Service;
+using SistemaDeEstacionamento.Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 // Configuração EF core

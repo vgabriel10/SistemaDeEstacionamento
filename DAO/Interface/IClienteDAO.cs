@@ -1,4 +1,6 @@
-﻿namespace SistemaDeEstacionamento.Models.DAO
+﻿using SistemaDeEstacionamento.Models;
+
+namespace SistemaDeEstacionamento.DAO.Interface
 {
     public interface IClienteDAO
     {

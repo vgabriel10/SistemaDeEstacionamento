@@ -2,7 +2,7 @@
 using SistemaDeEstacionamento.Models;
 using SistemaDeEstacionamento.Models.DAO;
 using SistemaDeEstacionamento.Models.DTO;
-using SistemaDeEstacionamento.Service;
+using SistemaDeEstacionamento.Service.Interfaces;
 using System.Diagnostics;
 using System.Security.Cryptography;
 

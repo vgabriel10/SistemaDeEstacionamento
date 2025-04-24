@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeEstacionamento.DAO.Interface;
+using SistemaDeEstacionamento.Data;
+using SistemaDeEstacionamento.Models;
 
-namespace SistemaDeEstacionamento.Models.DAO
+namespace SistemaDeEstacionamento.DAO
 {
     public class ClienteDAO : DbContext , IClienteDAO 
     {

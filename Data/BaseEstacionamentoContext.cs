@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaDeEstacionamento.Models;
 
-namespace SistemaDeEstacionamento.Models.DAO
+namespace SistemaDeEstacionamento.Data
 {
     public class BaseEstacionamentoContext : DbContext
     {

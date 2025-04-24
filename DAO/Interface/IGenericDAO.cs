@@ -1,4 +1,4 @@
-﻿namespace SistemaDeEstacionamento.Models.DAO
+﻿namespace SistemaDeEstacionamento.DAO.Interface
 {
     public interface IGenericDAO
     {

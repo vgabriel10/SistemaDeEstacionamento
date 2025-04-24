@@ -3,7 +3,6 @@ using iTextSharp.text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeEstacionamento.Models.DTO;
-using SistemaDeEstacionamento.Service;
 using System.Diagnostics;
 using SistemaDeEstacionamento.Enums;
 using SistemaDeEstacionamento.Helpers;
@@ -12,6 +11,7 @@ using System.Drawing;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using SistemaDeEstacionamento.Exceptions;
+using SistemaDeEstacionamento.Service.Interfaces;
 
 namespace SistemaDeEstacionamento.Models.DAO
 {
