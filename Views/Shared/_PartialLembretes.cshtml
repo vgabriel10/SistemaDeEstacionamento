@@ -4,6 +4,24 @@
 
 <script>
 
+    function AdicionarLembrete() {
+        let lembrete = $('#txtLembrete').val();
+        console.log(lembrete);
+        $.ajax({
+            url: '/Estacionamento/RegistrarLembrete',
+            type: 'POST',
+            data: { lembrete: lembrete },
+            success: function (response) {
+                console.log('Resposta do servidor:', response);
+                alert('Deu certo!');
+                $('#btnFecharModal').click();
+                // $('#partialView_RetornarVagas').load(`/Estacionamento/PartialRetornarVagas`);
+            },
+            error: function (error) {
+                console.error('Erro na solicitação:', error);
+            }
+        });
+    }
 
 </script>
 
@@ -28,30 +46,30 @@
         else
         {
             <p>Você ainda não adicionou nenhum lembrete!</p>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="mdo">Adicionar lembrete</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modelDialogAdicionarLembrete" data-bs-whatever="mdo">Adicionar lembrete</button>
         }
     }
 </ul>
 
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modelDialogAdicionarLembrete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Alterar preço</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Lembrete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Total de Vagas:</label>
-                        <input class="form-control" id="txtPreco" type="number" />
+                        <label for="message-text" class="col-form-label">Lembrete</label>
+                        <input class="form-control" id="txtLembrete" type="text" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="">Concluir</button>
+                <button type="button" class="btn btn-primary" onclick="AdicionarLembrete();">Concluir</button>
                 <button id="btnFecharModal" type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>

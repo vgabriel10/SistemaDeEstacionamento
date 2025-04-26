@@ -14,12 +14,14 @@ namespace SistemaDeEstacionamento.Controllers
         private readonly IClienteService _clienteService;
         private readonly IEstacionamentoService _estacionamentoService;
         private readonly IFaturamentoService _faturamentoService;
+        private readonly ILembreteService _lembreteService;
 
-        public EstacionamentoController(IClienteService clienteService, IEstacionamentoService estacionamentoService, IFaturamentoService faturamentoService)
+        public EstacionamentoController(IClienteService clienteService, IEstacionamentoService estacionamentoService, IFaturamentoService faturamentoService, ILembreteService lembreteService)
         {
             _clienteService = clienteService;
             _estacionamentoService = estacionamentoService;
             _faturamentoService = faturamentoService;
+            _lembreteService = lembreteService;
         }
 
         //public IActionResult Index()
@@ -88,6 +90,14 @@ namespace SistemaDeEstacionamento.Controllers
             Response.Redirect("/Estacionamento/ListarVeiculos");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RegistrarLembrete(string lembrete)
+        {
+            await _lembreteService.CriarLembrete(lembrete);
+            return View();
+            //return await PartialLembretes();
+        }
+
         public IActionResult PartialListarVeiculos()
         {
             var listaVeiculos = _estacionamentoService.RetornarUltimos50Veiculos();
@@ -103,9 +113,9 @@ namespace SistemaDeEstacionamento.Controllers
             return PartialView("_PartialRetornarVagas", infoVagas);
         }
 
-        public IActionResult PartialLembretes()
+        public async Task<IActionResult> PartialLembretes()
         {
-            List<Lembrete> lembretes = _estacionamentoService.RetornarLembretes();
+            List<Lembrete> lembretes = await _lembreteService.RetornarLembretes();
             return PartialView("_PartialLembretes", lembretes);
         }
 

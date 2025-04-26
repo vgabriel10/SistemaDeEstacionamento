@@ -4,6 +4,7 @@ using SistemaDeEstacionamento.DAO;
 using SistemaDeEstacionamento.DAO.Interface;
 using SistemaDeEstacionamento.Data;
 using SistemaDeEstacionamento.Models.DAO;
+using SistemaDeEstacionamento.Service;
 using SistemaDeEstacionamento.Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,8 @@ builder.Services.AddScoped<IEstacionamentoDAO, EstacionamentoDAO>();
 builder.Services.AddScoped<IFaturamentoService, FaturamentoService>();
 builder.Services.AddScoped<IFaturamentoDAO, FaturamentoDAO>();
 builder.Services.AddScoped<IRelatorioService, RelatorioService>();
+builder.Services.AddScoped<ILembreteService, LembreteService>();
+builder.Services.AddScoped<ILembreteDAO, LembreteDAO>();
 
 
 // Add services to the container.
