@@ -4,6 +4,33 @@
 
 <script>
 
+        $(document).ready(function(){
+        $('.checkbox-lembrete').change(function(){
+             var idSelecionado = parseInt($(this).val());
+             var marcado = $(this).is(':checked');
+             if(marcado == true){
+                 console.log(idSelecionado);
+                 ConcluirLembrete(idSelecionado);
+             }
+        });
+    });
+
+    function ConcluirLembrete(idSelecionado){
+        $.ajax({
+            url: '/Estacionamento/ConcluirLembrete',
+            type: 'POST',
+            data: { id: idSelecionado },
+            success: function (response) {
+                console.log('Resposta do servidor:', response);
+                alert('Deu certo!');
+                $('#partialView_Lembretes').load(`/Estacionamento/PartialLembretes`);
+            },
+            error: function (error) {
+                console.error('Erro na solicitação:', error);
+            }
+        });
+    }
+
     function AdicionarLembrete() {
         let lembrete = $('#txtLembrete').val();
         console.log(lembrete);
@@ -14,8 +41,8 @@
             success: function (response) {
                 console.log('Resposta do servidor:', response);
                 alert('Deu certo!');
-                $('#btnFecharModal').click();
-                // $('#partialView_RetornarVagas').load(`/Estacionamento/PartialRetornarVagas`);
+                $('#btnFecharModalLembrete').click();
+                $('#partialView_Lembretes').load(`/Estacionamento/PartialLembretes`);
             },
             error: function (error) {
                 console.error('Erro na solicitação:', error);
@@ -34,12 +61,12 @@
             foreach(Lembrete item in Model)
             {  
                 <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="@item.Id" aria-label="...">
+                    <input class="form-check-input me-1 checkbox-lembrete" type="checkbox" value="@item.Id" aria-label="...">
                     @item.Descricao
                 </li>
             }
             <li class="list-group-item">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="mdo">Visualizar todos</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modelDialogAdicionarLembrete" data-bs-whatever="mdo">Adicionar lembrete</button>
             </li>
             
         }
@@ -70,7 +97,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="AdicionarLembrete();">Concluir</button>
-                <button id="btnFecharModal" type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                <button id="btnFecharModalLembrete" type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>

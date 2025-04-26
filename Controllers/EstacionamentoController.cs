@@ -94,8 +94,16 @@ namespace SistemaDeEstacionamento.Controllers
         public async Task<IActionResult> RegistrarLembrete(string lembrete)
         {
             await _lembreteService.CriarLembrete(lembrete);
-            return View();
-            //return await PartialLembretes();
+            //return View();
+            return await PartialLembretes();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConcluirLembrete(int id)
+        {
+            await _lembreteService.RemoverLembrete(id);
+            //return View();
+            return await PartialLembretes();
         }
 
         public IActionResult PartialListarVeiculos()
