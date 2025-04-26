@@ -4,49 +4,49 @@
 
 <script>
 
-        $(document).ready(function(){
+    $(document).ready(function(){
         $('.checkbox-lembrete').change(function(){
-             var idSelecionado = parseInt($(this).val());
-             var marcado = $(this).is(':checked');
-             if(marcado == true){
-                 console.log(idSelecionado);
-                 ConcluirLembrete(idSelecionado);
-             }
+        var idSelecionado = parseInt($(this).val());
+        var marcado = $(this).is(':checked');
+        if(marcado == true){
+            console.log(idSelecionado);
+            ConcluirLembrete(idSelecionado);
+        }
         });
     });
 
     function ConcluirLembrete(idSelecionado){
         $.ajax({
-            url: '/Estacionamento/ConcluirLembrete',
-            type: 'POST',
-            data: { id: idSelecionado },
-            success: function (response) {
-                console.log('Resposta do servidor:', response);
-                alert('Deu certo!');
-                $('#partialView_Lembretes').load(`/Estacionamento/PartialLembretes`);
-            },
-            error: function (error) {
-                console.error('Erro na solicitação:', error);
-            }
+        url: '/Estacionamento/ConcluirLembrete',
+        type: 'POST',
+        data: { id: idSelecionado },
+        success: function (response) {
+        console.log('Resposta do servidor:', response);
+        alert('Deu certo!');
+        $('#partialView_Lembretes').load(`/Estacionamento/PartialLembretes`);
+        },
+        error: function (error) {
+        console.error('Erro na solicitação:', error);
+        }
         });
     }
 
     function AdicionarLembrete() {
-        let lembrete = $('#txtLembrete').val();
-        console.log(lembrete);
+    let lembrete = $('#txtLembrete').val();
+    console.log(lembrete);
         $.ajax({
-            url: '/Estacionamento/RegistrarLembrete',
-            type: 'POST',
-            data: { lembrete: lembrete },
-            success: function (response) {
-                console.log('Resposta do servidor:', response);
-                alert('Deu certo!');
-                $('#btnFecharModalLembrete').click();
-                $('#partialView_Lembretes').load(`/Estacionamento/PartialLembretes`);
-            },
-            error: function (error) {
-                console.error('Erro na solicitação:', error);
-            }
+        url: '/Estacionamento/RegistrarLembrete',
+        type: 'POST',
+        data: { lembrete: lembrete },
+        success: function (response) {
+            console.log('Resposta do servidor:', response);
+            alert('Deu certo!');
+            $('#btnFecharModalLembrete').click();
+            $('#partialView_Lembretes').load(`/Estacionamento/PartialLembretes`);
+        },
+        error: function (error) {
+            console.error('Erro na solicitação:', error);
+        }
         });
     }
 
@@ -58,16 +58,20 @@
         if (Model != null && Model.Count > 0)
         {
             <span>@Model.Count Lembretes</span>
-            foreach(Lembrete item in Model)
+            foreach(Lembrete item in Model.Take(2))
             {  
                 <li class="list-group-item">
                     <input class="form-check-input me-1 checkbox-lembrete" type="checkbox" value="@item.Id" aria-label="...">
                     @item.Descricao
                 </li>
             }
-            <li class="list-group-item">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modelDialogAdicionarLembrete" data-bs-whatever="mdo">Adicionar lembrete</button>
-            </li>
+            if(Model.Count < 2)
+            {
+                <li class="list-group-item">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modelDialogAdicionarLembrete" data-bs-whatever="mdo">Adicionar lembrete</button>
+                </li>
+            }
+            
             
         }
         else
